@@ -1,0 +1,26 @@
+.movieInfoInner {
+  display: flex;
+
+  & + & {
+    margin-top: 10px;
+  }
+
+  .posterBlock {
+    img {
+      width: 120px;
+    }
+  }
+
+  .infoBlock {
+    margin-left: 10px;
+
+    .titleText {
+      font-size: 26px;
+      font-weight: 600;
+
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}

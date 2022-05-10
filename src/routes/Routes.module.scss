@@ -7,3 +7,12 @@
   justify-content: center;
   height: 100vh;
 }
+
+.fallback {
+  width: 360px;
+  height: 720px;
+  padding: 50px 30px;
+  color: colors.$WHITE;
+  background: linear-gradient(165deg, #032b64 30%, #161448 75%);
+  border-radius: 36px;
+}
