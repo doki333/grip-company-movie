@@ -1,0 +1,13 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.searchWrapper {
+  width: 360px;
+  height: 720px;
+  padding: 50px 30px;
+  color: colors.$WHITE;
+  background: linear-gradient(165deg, #032b64 30%, #161448 75%);
+  border-radius: 36px;
+}

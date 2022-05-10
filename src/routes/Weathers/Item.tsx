@@ -3,15 +3,12 @@ import dayjs from 'dayjs'
 import styles from './Weather.module.scss'
 
 import { IListItem } from 'types/weather.d'
-import { getWeatherIcon } from 'utils/weather'
 
 interface Props {
   item: IListItem
 }
 
 const WeatherItem = ({ item }: Props) => {
-  const WeatherIcon = getWeatherIcon(item.weather[0].main)
-
   return (
     <li key={item.dt_txt}>
       <dl>
@@ -31,9 +28,7 @@ const WeatherItem = ({ item }: Props) => {
         </div>
         <div>
           <dt>날씨</dt>
-          <dd>
-            <WeatherIcon />
-          </dd>
+          <dd>{/* <WeatherIcon /> */}</dd>
         </div>
       </dl>
     </li>

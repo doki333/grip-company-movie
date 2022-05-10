@@ -1,6 +1,7 @@
 @use '/src/styles/constants/colors';
 
-.app {
+.appWrapper {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
