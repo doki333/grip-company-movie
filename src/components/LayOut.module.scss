@@ -3,7 +3,7 @@
 @use '/src/styles/mixins/flexbox';
 @use '/src/styles/mixins/position';
 
-.favoritesWrapper {
+.layOutWrapper {
   width: 360px;
   height: 720px;
   padding: 50px 30px;
@@ -12,16 +12,10 @@
   border-radius: 36px;
 
   h1 {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     font-size: 26px;
     font-weight: 600;
     text-align: center;
     text-transform: uppercase;
-  }
-
-  .favoriteItemsWrapper {
-    height: 540px;
-    margin-top: 25px;
-    overflow-y: scroll;
   }
 }

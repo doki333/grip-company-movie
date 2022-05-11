@@ -22,6 +22,22 @@
   }
 
   .posterBlock {
+    position: relative;
+
+    &.bookmarked {
+      &::before {
+        position: absolute;
+        width: 50px;
+        height: 40px;
+        padding-left: 14px;
+        font-size: 24px;
+        text-align: left;
+        content: '★';
+        background-color: #ffcc00;
+        border-bottom-right-radius: 50px;
+        transform: translateX(-7px);
+      }
+    }
     img {
       width: 120px;
     }

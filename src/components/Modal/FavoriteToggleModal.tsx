@@ -11,7 +11,8 @@ export const FavoriteToggleModal = () => {
   const [selectedInfo, , resetSelectedInfo] = useRecoil(selectedMovieInfo)
   const [, setIsVisible] = useRecoil(modalVisibleState)
 
-  const getLocalStorageData = store.get('#M@VIeFavorITe')
+  const getLocalStorageData = store.get('#M@VIeFavorITe') ?? []
+
   const findItem = getLocalStorageData.findIndex((item: ItemType) => item.imdbID === selectedInfo.imdbID) !== -1
   // 로컬스토리지 안에 있을때
 

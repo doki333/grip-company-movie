@@ -1,7 +1,8 @@
 import { SearchIcon } from 'assets/svgs'
+import { LayOut } from 'components/LayOut'
 import { useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
-import { modalVisibleState, movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
+import { movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
 import React, { ChangeEvent, useCallback, useState } from 'react'
 import { getMovieList } from 'services/movie'
 import { MovieList } from './movieList'
@@ -43,8 +44,7 @@ export const Search = () => {
   }
 
   return (
-    <div className={styles.searchWrapper}>
-      <h1>Search</h1>
+    <LayOut title='search'>
       <form onSubmit={handleSubmit} className={styles.searchForm}>
         <input type='text' onChange={handleInputChange} ref={inputRef} />
         <button type='submit'>
@@ -52,6 +52,6 @@ export const Search = () => {
         </button>
       </form>
       <MovieList />
-    </div>
+    </LayOut>
   )
 }

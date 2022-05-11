@@ -1,11 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { MovieItem } from 'components/MovieItem/MovieItem'
 import { useRecoil } from 'hooks/state'
 import { movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
 import { getMovieList } from 'services/movie'
 import { IMovieArr } from 'types/search'
 import styles from './movieList.module.scss'
-import { FavoriteToggleModal } from 'components/Modal/FavoriteToggleModal'
 
 let timer: NodeJS.Timeout
 
