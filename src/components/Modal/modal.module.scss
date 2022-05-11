@@ -6,16 +6,48 @@
 .modalWrapper {
   @include flexbox.flexbox('center', 'center');
   position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  bottom: 50%;
+  left: 50%;
+  width: 360px;
+  height: 720px;
   background: rgba(colors.$BLACK, 50%);
+  border-radius: 36px;
+  transform: translate(-50%, 50%);
 
   .modalInner {
+    @include flexbox.flexbox('center', 'center');
+    flex-direction: column;
     width: 300px;
-    height: 250px;
-    padding: 40px;
+    height: 300px;
+    padding: 20px;
     background: colors.$WHITE;
     border-radius: 20px;
+
+    .modalInfo {
+      line-height: 20px;
+      text-align: center;
+
+      img {
+        width: 90px;
+      }
+
+      .infoTitle {
+        margin-top: 10px;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 3px;
+      }
+    }
+
+    .modalBtns {
+      margin-top: 10px;
+      button {
+        width: 100px;
+        margin: 5px;
+        padding: 5px 20px;
+        border-radius: 10px;
+        background: colors.$GRAYD;
+      }
+    }
   }
 }

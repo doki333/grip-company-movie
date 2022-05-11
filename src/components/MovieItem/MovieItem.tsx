@@ -1,13 +1,15 @@
+import { FavoriteToggleModal } from 'components/Modal/FavoriteToggleModal'
 import { useRecoil } from 'hooks/state'
-import { FavoritesState } from 'hooks/state/movie.atom'
+import { modalVisibleState, selectedMovieInfo } from 'hooks/state/movie.atom'
 import { IMovieArr } from 'types/search'
 import styles from './moveItem.module.scss'
 
 export const MovieItem = (item: IMovieArr) => {
-  const [favorites, setFavorites] = useRecoil(FavoritesState)
+  const [, setModalVisible] = useRecoil(modalVisibleState)
+  const [, setMovieInfo] = useRecoil(selectedMovieInfo)
   const onClickItem = () => {
-    console.log('hello')
-    console.log(item)
+    setModalVisible(true)
+    setMovieInfo(item)
   }
   const { Title, Year, Type, Poster } = item
   return (
