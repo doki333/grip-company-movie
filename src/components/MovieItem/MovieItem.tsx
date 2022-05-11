@@ -1,4 +1,3 @@
-import { FavoriteToggleModal } from 'components/Modal/FavoriteToggleModal'
 import { useRecoil } from 'hooks/state'
 import { modalVisibleState, selectedMovieInfo } from 'hooks/state/movie.atom'
 import { IMovieArr } from 'types/search'

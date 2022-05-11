@@ -8406,10 +8406,10 @@ statuses@2.0.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
-store@^2.0.12:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/store/-/store-2.0.12.tgz#8c534e2a0b831f72b75fc5f1119857c44ef5d593"
-  integrity sha1-jFNOKguDH3K3X8XxEZhXxE711ZM=
+storejs@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/storejs/-/storejs-2.0.1.tgz#3424f4c88ff979e3962413ce60ea43fd660a9657"
+  integrity sha512-hN/Rb7noRSxwTMdO1ksotketRqAy8fyzwXIXe0wPurV1YzlUVdgL0wC9eSOPpzCLiCPSoHICeX4paFrzigeGeg==
 
 string-length@^4.0.1:
   version "4.0.2"
