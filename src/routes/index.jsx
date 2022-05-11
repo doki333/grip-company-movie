@@ -12,12 +12,10 @@ const App = () => {
   return (
     <div className={styles.appWrapper}>
       <div className={styles.app}>
-        <Suspense fallback={<div className={styles.fallback}>Loading...</div>}>
-          <Routes>
-            <Route path='/' element={<Search />} />
-            <Route path='/favorites' element={<Favorites />} />
-          </Routes>
-        </Suspense>
+        <Routes>
+          <Route path='/' element={<Search />} />
+          <Route path='/favorites' element={<Favorites />} />
+        </Routes>
         <NavTab />
       </div>
     </div>

@@ -2,7 +2,7 @@ import { IMovieArr } from 'types/search'
 import styles from './moveItem.module.scss'
 
 export const MovieItem = (item: IMovieArr) => {
-  const { Title, Year, imdbID, Type, Poster } = item
+  const { Title, Year, Type, Poster } = item
   return (
     <li className={styles.movieInfoInner}>
       <div className={styles.posterBlock}>
