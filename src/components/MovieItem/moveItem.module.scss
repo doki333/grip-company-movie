@@ -1,0 +1,45 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.movieInfoInner {
+  display: block;
+  width: 100%;
+
+  button {
+    display: flex;
+    color: colors.$WHITE;
+  }
+
+  div {
+    display: inline-block;
+    height: 50%;
+  }
+
+  & + & {
+    margin-top: 10px;
+  }
+
+  .posterBlock {
+    img {
+      width: 120px;
+    }
+  }
+
+  .infoBlock {
+    width: 180px;
+    height: 100%;
+    margin-left: 10px;
+
+    .titleText {
+      height: 80px;
+      font-size: 24px;
+      font-weight: 600;
+
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}

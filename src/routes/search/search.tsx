@@ -1,7 +1,7 @@
 import { SearchIcon } from 'assets/svgs'
 import { useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
-import { movieInfo, pageNumberState, searchedState } from 'hooks/state/atom'
+import { movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
 import React, { ChangeEvent, useCallback, useState } from 'react'
 import { getMovieList } from 'services/movie'
 import { MovieList } from './movieList'

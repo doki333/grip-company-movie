@@ -19,7 +19,7 @@ export const movieInfo = atom<Array<IMovieArr> | []>({
   default: [],
 })
 
-// export const FavoritesState = {
-//   key: 'favoriteKeys',
-//   default: [],
-// }
+export const FavoritesState = atom<Array<IMovieArr> | []>({
+  key: 'favoriteKeys',
+  default: [],
+})
