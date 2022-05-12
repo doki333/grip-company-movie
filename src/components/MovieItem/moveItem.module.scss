@@ -6,13 +6,12 @@
 .movieInfoInner {
   display: block;
   width: 100%;
-  background: #31254a;
   // border: 1px solid #293a74;
   border-radius: 20px;
 
   button {
     display: flex;
-    height: 180px;
+    height: 160px;
     color: colors.$WHITE;
   }
 
@@ -40,7 +39,8 @@
 
     img {
       width: 120px;
-      height: 180px;
+      min-width: 120px;
+      height: 160px;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
     }
@@ -48,11 +48,15 @@
 
   .infoBlock {
     width: 180px;
-    // margin-left: 10px;
+    text-align: left;
+    margin-left: 10px;
 
     .titleText {
-      height: 80px;
-      font-size: 20px;
+      display: block;
+      width: 180px;
+      max-height: 55px;
+      overflow: hidden;
+      font-size: 22px;
       font-weight: 600;
 
       span {

@@ -55,7 +55,7 @@ export const FavoriteToggleModal = () => {
               {selectedInfo.Title}
               <span>({selectedInfo.Year})</span>
             </p>
-            <p>{isStored ? `Remove?` : 'Add to Favorites?'}</p>
+            <p className={styles.noticeText}>{isStored ? `Remove?` : 'Add to Favorites?'}</p>
           </main>
           <div className={styles.modalBtns}>
             <button type='button' onClick={handleClickStarBtn}>
