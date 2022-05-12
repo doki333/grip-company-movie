@@ -1,25 +1,25 @@
-import { SearchIcon } from 'assets/svgs'
 import { LayOut } from 'components/LayOut'
-import { useMount, useRef, useUnmount } from 'hooks'
+import { CommonMovieList } from 'components/MovieList/commonMovieList'
+import { useCallback, useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
 import { movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
-import React, { ChangeEvent, useCallback, useState } from 'react'
 import { getMovieList } from 'services/movie'
-import { MovieList } from './movieList'
-import styles from './search.module.scss'
+import { SearchInput } from './SearchInput'
+
+let timer: NodeJS.Timeout
 
 export const Search = () => {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const msgRef = useRef<HTMLParagraphElement>(null)
 
-  const [, setMovieList, resetMovieList] = useRecoil(movieInfo)
-  const [, setSearchedState] = useRecoil(searchedState)
+  const [movieList, setMovieList, resetMovieList] = useRecoil(movieInfo)
   const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageNumberState)
+  const [searchedText] = useRecoil(searchedState)
 
-  const [text, setText] = useState<string>('')
+  const isEmpty = movieList.length === 0
+  const emptyEmg = '검색 결과가 없습니다.'
 
   useMount(() => {
-    getMovieList({ s: text, page: pageNumber.page, updater: setMovieList, counter: setPageNumber })
-    if (inputRef.current) inputRef.current.focus()
+    setMovieList([])
   })
 
   useUnmount(() => {
@@ -27,31 +27,39 @@ export const Search = () => {
     resetMovieList()
   })
 
-  const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>): void => {
-      const { value } = e.currentTarget
-      setText(value)
-    },
-    [setText]
-  )
+  const handleScrollEvent = useCallback(
+    (e: React.UIEvent<HTMLUListElement>) => {
+      const { scrollHeight, scrollTop, clientHeight } = e.currentTarget
+      const isAtEnd = scrollHeight <= Math.ceil(scrollTop + clientHeight)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    resetPageNumber()
-    resetMovieList()
-    setSearchedState(text)
-    getMovieList({ s: text, page: pageNumber.page, updater: setMovieList, counter: setPageNumber })
-  }
+      if (isAtEnd) {
+        if (timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+          if (pageNumber.page >= pageNumber.wholePage && msgRef.current) {
+            // 페이지가 끝으로 가면 다 됐다는 메세지 보여주고 리턴
+            msgRef.current.style.display = 'block'
+            return
+          }
+          getMovieList({ s: searchedText, page: pageNumber.page + 1, updater: setMovieList, counter: setPageNumber }) // 다음 페이지 데이터 불러오기
+        }, 150)
+      }
+    },
+    [pageNumber, searchedText, setMovieList, setPageNumber]
+  )
 
   return (
     <LayOut title='search'>
-      <form onSubmit={handleSubmit} className={styles.searchForm}>
-        <input type='text' onChange={handleInputChange} ref={inputRef} />
-        <button type='submit'>
-          <SearchIcon />
-        </button>
-      </form>
-      <MovieList />
+      <SearchInput />
+      <CommonMovieList
+        data={movieList}
+        keyword='movie'
+        scrollEvent={handleScrollEvent}
+        isEmpty={isEmpty}
+        emptyText={emptyEmg}
+        msgRef={msgRef}
+      />
     </LayOut>
   )
 }
