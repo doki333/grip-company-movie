@@ -7,7 +7,6 @@ import { cx } from 'styles'
 interface mappingData {
   data: Array<IMovieArr>
   scrollEvent?: React.UIEventHandler<HTMLUListElement>
-  child?: JSX.Element | JSX.Element[]
   keyword: string
   isEmpty: Boolean
   emptyText: string

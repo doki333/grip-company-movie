@@ -1,12 +1,19 @@
+import React, { Suspense } from 'react'
 import { LayOut } from 'components/LayOut'
-import { CommonMovieList } from 'components/MovieList/commonMovieList'
 import { useCallback, useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
 import { movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
 import { getMovieList } from 'services/movie'
 import { SearchInput } from './SearchInput'
+import { CommonMovieList } from '../../components/MovieList/commonMovieList'
+// import { CommonMovieList } from '../../components/MovieList/commonMovieList'
 
 let timer: NodeJS.Timeout
+
+// const LazyList = React.lazy(async ()=> {
+//  await import('../../components/MovieList/commonMovieList')
+//  return {default: props => <CommonMovieList {...props} />}
+// })
 
 export const Search = () => {
   const msgRef = useRef<HTMLParagraphElement>(null)

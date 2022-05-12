@@ -29,6 +29,7 @@ export const SearchInput = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (text.trim() === '') return
     resetPageNumber()
     resetMovieList()
     setSearchedState(text)
@@ -37,10 +38,10 @@ export const SearchInput = () => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.searchForm}>
-      <input type='text' onChange={handleInputChange} ref={inputRef} />
       <button type='submit'>
         <SearchIcon />
       </button>
+      <input type='text' onChange={handleInputChange} ref={inputRef} placeholder='Search Movie' />
     </form>
   )
 }

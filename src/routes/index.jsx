@@ -6,10 +6,10 @@ import { Routes, Route } from 'react-router-dom'
 import { Search } from './search/search'
 import { Favorites } from './favorites/favorites'
 import { NavTab } from './_shared/GNB/NavTab/NavTab'
-import { Suspense, useRef } from 'react'
 import { FavoriteToggleModal } from 'components/Modal/FavoriteToggleModal'
 import { useRecoil } from 'hooks/state'
 import { modalVisibleState } from 'hooks/state/movie.atom'
+import { Suspense } from 'react'
 
 const App = () => {
   const [isModalVisible] = useRecoil(modalVisibleState)

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import styles from './NavTab.module.scss'
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
 import cx from 'classnames'
@@ -9,12 +9,12 @@ export const NavTab = () => {
   const isSearching = pathname === '/'
   return (
     <nav className={styles.navWrapper}>
-      <Link to='/' className={cx({ [styles.isSearching]: isSearching })}>
+      <NavLink to='/' className={cx({ [styles.isSearching]: isSearching })}>
         <SearchIcon />
-      </Link>
-      <Link to='/favorites'>
+      </NavLink>
+      <NavLink to='/favorites' className={cx({ [styles.isActive]: !isSearching })}>
         {pathname === '/favorites' ? <BsBookmarkStarFill size='30px' /> : <BsBookmarkStar size='30px' />}
-      </Link>
+      </NavLink>
     </nav>
   )
 }

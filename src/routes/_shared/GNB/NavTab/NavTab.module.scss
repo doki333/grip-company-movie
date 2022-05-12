@@ -12,7 +12,10 @@
 
   a {
     text-align: center;
+    color: #687089;
+  }
 
+  .isActive {
     svg {
       color: colors.$WHITE;
     }
@@ -20,6 +23,8 @@
 
   .isSearching {
     svg {
+      color: colors.$WHITE;
+      stroke: colors.$WHITE;
       stroke-width: 1px;
     }
   }

@@ -6,18 +6,23 @@
 .searchForm {
   input[type='text'] {
     width: 100%;
-    padding: 5px 15px;
-    padding-right: 30px;
+    padding: 12px 30px;
+    padding-left: 45px;
     font-size: 18px;
     color: colors.$WHITE;
-    border-bottom: 1px solid colors.$WHITE;
+    background: #2c3759;
+    border-radius: 20px;
+
+    &::placeholder {
+      color: #626a84;
+    }
   }
 
   button {
     position: absolute;
     padding: 10px 15px;
     color: colors.$WHITE;
-    transform: translate(-40px, -4px);
+    transform: translate(2px, 2px);
 
     svg {
       width: 20px;
