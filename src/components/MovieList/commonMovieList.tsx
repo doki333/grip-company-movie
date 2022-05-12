@@ -3,6 +3,9 @@ import { MovieItem } from 'components/MovieItem/MovieItem'
 import React from 'react'
 import { IMovieArr } from 'types/search'
 import { cx } from 'styles'
+import { useRecoil } from 'hooks/state'
+import { isLoading } from 'hooks/state/movie.atom'
+import { Spinner } from 'components/Spinner/Spinner'
 
 interface mappingData {
   data: Array<IMovieArr>
@@ -15,6 +18,7 @@ interface mappingData {
 
 export const CommonMovieList = ({ data, scrollEvent, keyword, isEmpty, emptyText, msgRef }: mappingData) => {
   const isKeywordMovie = keyword === 'movie'
+
   return (
     <div className={styles.movieListWrapper}>
       {isEmpty ? (
@@ -24,9 +28,10 @@ export const CommonMovieList = ({ data, scrollEvent, keyword, isEmpty, emptyText
           {data.map((value: IMovieArr) => (
             <MovieItem {...value} key={`${keyword}-${value.imdbID + Math.random()}`} />
           ))}
+
           {isKeywordMovie && (
             <p ref={msgRef} className={styles.endMsg}>
-              검색결과가 더이상 없습니다!
+              {emptyText}
             </p>
           )}
         </ul>

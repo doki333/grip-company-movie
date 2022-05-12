@@ -31,8 +31,7 @@ export const movieInfo = atom<Array<IMovieArr> | []>({
   default: [],
 })
 
-// export const FavoritesState = atom<Array<IMovieArr> | []>({
-//   // 즐겨찾기에 추가한 아이템 배열
-//   key: 'favoriteKeys',
-//   default: [],
-// })
+export const isLoading = atom<Boolean>({
+  key: 'isLoadingState',
+  default: false,
+})

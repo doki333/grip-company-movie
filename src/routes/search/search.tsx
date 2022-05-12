@@ -2,10 +2,12 @@ import React, { Suspense } from 'react'
 import { LayOut } from 'components/LayOut'
 import { useCallback, useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
-import { movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
+import { isLoading, movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
 import { getMovieList } from 'services/movie'
 import { SearchInput } from './SearchInput'
 import { CommonMovieList } from '../../components/MovieList/commonMovieList'
+import styles from 'styles'
+import { Spinner } from 'components/Spinner/Spinner'
 // import { CommonMovieList } from '../../components/MovieList/commonMovieList'
 
 let timer: NodeJS.Timeout
@@ -20,6 +22,7 @@ export const Search = () => {
 
   const [movieList, setMovieList, resetMovieList] = useRecoil(movieInfo)
   const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageNumberState)
+  const [isLoad, setIsLoad] = useRecoil(isLoading)
   const [searchedText] = useRecoil(searchedState)
 
   const isEmpty = movieList.length === 0
@@ -32,6 +35,7 @@ export const Search = () => {
   useUnmount(() => {
     resetPageNumber()
     resetMovieList()
+    setIsLoad(false)
   })
 
   const handleScrollEvent = useCallback(
@@ -40,20 +44,25 @@ export const Search = () => {
       const isAtEnd = scrollHeight <= Math.ceil(scrollTop + clientHeight)
 
       if (isAtEnd) {
+        setIsLoad(true)
         if (timer) {
           clearTimeout(timer)
         }
         timer = setTimeout(() => {
           if (pageNumber.page >= pageNumber.wholePage && msgRef.current) {
             // 페이지가 끝으로 가면 다 됐다는 메세지 보여주고 리턴
+            setIsLoad(false)
             msgRef.current.style.display = 'block'
+
             return
           }
+
           getMovieList({ s: searchedText, page: pageNumber.page + 1, updater: setMovieList, counter: setPageNumber }) // 다음 페이지 데이터 불러오기
+          setIsLoad(false)
         }, 150)
       }
     },
-    [pageNumber, searchedText, setMovieList, setPageNumber]
+    [pageNumber, searchedText, setMovieList, setPageNumber, setIsLoad]
   )
 
   return (
@@ -67,6 +76,7 @@ export const Search = () => {
         emptyText={emptyEmg}
         msgRef={msgRef}
       />
+      {isLoad && <Spinner />}
     </LayOut>
   )
 }

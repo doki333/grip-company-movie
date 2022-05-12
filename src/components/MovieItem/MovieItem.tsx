@@ -29,8 +29,8 @@ export const MovieItem = (item: IMovieArr) => {
         </div>
         <div className={styles.infoBlock}>
           <p className={styles.titleText}>{sliceTitle}</p>
-          <p className={styles.typeText}>Type: {Type}</p>
           <p>Year: {Year}</p>
+          <p className={styles.typeText}>Type: {Type}</p>
         </div>
       </button>
     </li>
