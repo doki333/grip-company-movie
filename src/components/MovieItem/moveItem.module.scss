@@ -70,4 +70,19 @@
       }
     }
   }
+
+  .editBtn {
+    position: relative;
+    right: 28px;
+    bottom: 0;
+    width: 25px;
+    height: 156px;
+    background: rgba(255, 255, 255, 50%);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    svg {
+      color: colors.$WHITE;
+    }
+  }
 }

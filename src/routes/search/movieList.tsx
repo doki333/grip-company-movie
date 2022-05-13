@@ -1,9 +1,7 @@
 import React, { useCallback, useRef } from 'react'
-import { MovieItem } from 'components/MovieItem/MovieItem'
 import { useRecoil } from 'hooks/state'
 import { movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
 import { getMovieList } from 'services/movie'
-import { IMovieArr } from 'types/search'
 import styles from './movieList.module.scss'
 
 let timer: NodeJS.Timeout
@@ -39,18 +37,7 @@ export const MovieList = () => {
 
   return (
     <div className={styles.movieListWrapper}>
-      {movieList.length === 0 ? (
-        <p>검색 결과가 없습니다.</p>
-      ) : (
-        <ul onScroll={handleScrollEvent}>
-          {movieList.map((movie: IMovieArr) => (
-            <MovieItem {...movie} key={`movie-${movie.imdbID + Math.random()}`} />
-          ))}
-          <p className={styles.endMsg} ref={msgRef}>
-            검색 결과가 더이상 없습니다!
-          </p>
-        </ul>
-      )}
+      <p>검색 결과가 없습니다.</p>
     </div>
   )
 }

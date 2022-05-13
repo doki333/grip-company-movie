@@ -3,21 +3,14 @@ import { MovieItem } from 'components/MovieItem/MovieItem'
 import React, { useCallback } from 'react'
 import { IMovieArr } from 'types/search'
 import { cx } from 'styles'
-
-interface mappingData {
-  data: IMovieArr[]
-  scrollEvent?: React.UIEventHandler<HTMLUListElement>
-  keyword: string
-  isEmpty: Boolean
-  emptyText: string
-  msgRef?: React.LegacyRef<HTMLParagraphElement>
-}
+import { mappingData } from 'types/moveList'
+import { useRecoil } from 'hooks/state'
 
 export const CommonMovieList = ({ data, scrollEvent, keyword, isEmpty, emptyText, msgRef }: mappingData) => {
   const isKeywordMovie = keyword === 'movie'
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLUListElement>): void => {
-    // console.log(e)
+    e.preventDefault()
   }, [])
 
   return (
@@ -30,8 +23,15 @@ export const CommonMovieList = ({ data, scrollEvent, keyword, isEmpty, emptyText
           onScroll={scrollEvent}
           className={cx(styles.itemsWrapper, { [styles.isTaller]: !isKeywordMovie })}
         >
-          {data.map((value: IMovieArr) => (
-            <MovieItem {...value} key={`${keyword}-${value.imdbID + Math.random()}`} />
+          {data.map((item, index) => (
+            <MovieItem
+              title={item.title}
+              year={item.year}
+              type={item.type}
+              imdbID={item.imdbID}
+              poster={item.poster}
+              key={`${keyword}-${index + Math.random()}`}
+            />
           ))}
           {isKeywordMovie && (
             <p ref={msgRef} className={styles.endMsg}>

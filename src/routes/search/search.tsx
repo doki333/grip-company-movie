@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { LayOut } from 'components/LayOut'
 import { useCallback, useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
-import { isLoading, movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
+import { isDraggable, isLoading, movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
 import { getMovieList } from 'services/movie'
 import { SearchInput } from './SearchInput'
 import { CommonMovieList } from '../../components/MovieList/commonMovieList'
@@ -22,6 +22,7 @@ export const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [movieList, setMovieList, resetMovieList] = useRecoil(movieInfo)
+  const [isDragPossible, setIsDragPossible] = useRecoil(isDraggable)
   const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageNumberState)
   const [isLoad, setIsLoad] = useRecoil(isLoading)
   const [searchedText] = useRecoil(searchedState)
@@ -31,6 +32,7 @@ export const Search = () => {
 
   useMount(() => {
     setMovieList([])
+    setIsDragPossible(false)
     if (inputRef.current) inputRef.current.focus()
   })
 
@@ -38,6 +40,7 @@ export const Search = () => {
     resetPageNumber()
     resetMovieList()
     setIsLoad(false)
+    setIsDragPossible((prev) => !prev)
   })
 
   const handleScrollEvent = useCallback(
