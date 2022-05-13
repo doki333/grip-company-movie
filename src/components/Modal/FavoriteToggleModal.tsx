@@ -11,7 +11,7 @@ export const FavoriteToggleModal = () => {
   const [selectedInfo, , resetSelectedInfo] = useRecoil(selectedMovieInfo)
   const [, setIsVisible] = useRecoil(modalVisibleState)
 
-  const getLocalStorageData = store.get('#M@VIeFavorITe') ?? []
+  const getLocalStorageData = store.get('#M@VIeFavorITe') ?? [] // 로컬 스토리지에 저장되어 있는 데이터 가져오기
 
   const findItem = getLocalStorageData.findIndex((item: ItemType) => item.imdbID === selectedInfo.imdbID) !== -1
   // 로컬스토리지 안에 있을때
@@ -58,7 +58,7 @@ export const FavoriteToggleModal = () => {
             <p className={styles.noticeText}>{isStored ? `Remove?` : 'Add to Favorites?'}</p>
           </main>
           <div className={styles.modalBtns}>
-            <button type='button' onClick={handleClickStarBtn}>
+            <button type='button' onClick={handleClickStarBtn} className={styles.starBtn}>
               {isStored ? <AiFillStar size='30px' /> : <AiOutlineStar size='30px' />}
             </button>
             <button type='button' onClick={handleModalClose}>

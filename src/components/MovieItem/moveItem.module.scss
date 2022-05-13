@@ -3,17 +3,23 @@
 @use '/src/styles/mixins/flexbox';
 @use '/src/styles/mixins/position';
 
-.movieInfoInner {
-  display: block;
-  width: 100%;
-  // border: 1px solid #293a74;
-  border-radius: 20px;
-
-  button {
-    display: flex;
-    height: 160px;
-    color: colors.$WHITE;
+@keyframes fadeInItems {
+  0% {
+    transform: translateY(0%);
   }
+
+  100% {
+    transform: translateY(10%);
+  }
+}
+
+.movieInfoInner {
+  display: flex;
+  width: 100%;
+  height: 160px;
+  color: colors.$WHITE;
+  cursor: pointer;
+  border-radius: 20px;
 
   & + & {
     margin-top: 10px;
@@ -48,8 +54,8 @@
 
   .infoBlock {
     width: 180px;
-    text-align: left;
     margin-left: 10px;
+    text-align: left;
 
     .titleText {
       display: block;

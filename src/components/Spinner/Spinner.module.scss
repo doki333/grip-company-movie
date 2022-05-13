@@ -1,3 +1,8 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
 @keyframes spinner {
   from {
     transform: rotate(0deg);
@@ -10,19 +15,20 @@
 .spinnerWrapper {
   position: absolute;
   z-index: 10;
-  width: 360px;
+  width: 400px;
   height: 720px;
   background: rgba(255, 255, 255, 25%);
   border-radius: 36px;
-  transform: translate(-30px, -146px);
+  transform: translate(-66px, -90px);
 
-  .spinner {
+  &::before {
     position: relative;
     top: 50%;
     left: 50%;
     display: block;
     width: 50px;
     height: 50px;
+    content: '';
     background: transparent;
     border: 6px solid #2c3759;
     border-top-color: #4ad0ee;

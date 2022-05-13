@@ -3,6 +3,16 @@
 @use '/src/styles/mixins/flexbox';
 @use '/src/styles/mixins/position';
 
+@keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .movieListWrapper {
   margin-top: 10px;
 
@@ -29,6 +39,7 @@
       margin: 10px;
       font-size: 20px;
       text-align: center;
+      animation: showUp 1s ease infinite alternate;
     }
   }
 

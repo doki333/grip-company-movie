@@ -3,6 +3,23 @@
 @use '/src/styles/mixins/flexbox';
 @use '/src/styles/mixins/position';
 
+@keyframes slideUp {
+  0% {
+    display: none;
+    transform: translateY(2%);
+  }
+
+  50% {
+    display: block;
+    transform: translateY(-2%);
+  }
+
+  100% {
+    display: block;
+    transform: translateY(0%);
+  }
+}
+
 .modalWrapper {
   @include flexbox.flexbox('center', 'center');
   position: fixed;
@@ -18,11 +35,12 @@
     @include flexbox.flexbox('center', 'center');
     flex-direction: column;
     width: 300px;
-    min-height: 300px;
-    background: #13254a;
-    color: colors.$WHITE;
+    min-height: 240px;
     padding: 20px;
+    color: colors.$WHITE;
+    background: #13254a;
     border-radius: 20px;
+    animation: slideUp 0.25s ease forwards;
 
     .modalInfo {
       line-height: 20px;
