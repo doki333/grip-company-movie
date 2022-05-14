@@ -41,7 +41,7 @@ export const isDraggable = atom<Boolean>({
   default: false,
 })
 
-// export const favoriteArr = atom<Array<IMovieItem> | []>({
-//   key: 'favoriteMovieState',
-//   default: [],
-// })
+export const favoriteArr = atom<Array<IMovieItem> | []>({
+  key: 'favoriteMovieState',
+  default: [],
+})

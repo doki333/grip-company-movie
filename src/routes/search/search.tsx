@@ -55,6 +55,7 @@ export const Search = () => {
       }
 
       if (isAtEnd) {
+        if (isLoad === true) return // 로딩중이면 리턴
         setIsLoad(true)
         if (timer) {
           clearTimeout(timer)
@@ -65,21 +66,22 @@ export const Search = () => {
         }, 200)
       }
     },
-    [pageNumber, searchedText, setMovieList, setPageNumber, setIsLoad]
+    [pageNumber, searchedText, setMovieList, setPageNumber, setIsLoad, isLoad]
   )
 
   return (
     <LayOut title='search'>
-      {isLoad && <Spinner />}
       <SearchInput ref={inputRef} />
-      <CommonMovieList
-        data={movieList}
-        keyword='movie'
-        scrollEvent={handleScrollEvent}
-        isEmpty={isEmpty}
-        emptyText={emptyEmg}
-        msgRef={msgRef}
-      />
+      <Suspense fallback={<Spinner />}>
+        <CommonMovieList
+          data={movieList}
+          keyword='movie'
+          scrollEvent={handleScrollEvent}
+          isEmpty={isEmpty}
+          emptyText={emptyEmg}
+          msgRef={msgRef}
+        />
+      </Suspense>
     </LayOut>
   )
 }

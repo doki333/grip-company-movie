@@ -15,6 +15,7 @@
 
 .movieListWrapper {
   margin-top: 10px;
+  text-align: center;
 
   .itemsWrapper {
     height: 510px;
@@ -39,7 +40,7 @@
       margin: 10px;
       font-size: 20px;
       text-align: center;
-      animation: showUp 1s ease infinite alternate;
+      animation: showUp 2s ease infinite alternate;
     }
   }
 

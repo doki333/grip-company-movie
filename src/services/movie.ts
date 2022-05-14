@@ -1,3 +1,5 @@
+import { useRecoil } from 'hooks/state'
+import { isLoading } from 'hooks/state/movie.atom'
 import { axios } from 'hooks/worker'
 import { SetterOrUpdater } from 'recoil'
 import { IMovieAPIResult, IMovieArr, IMovieItem, IPageResult } from 'types/search.d'
@@ -10,7 +12,7 @@ interface MovieParams {
   page: number
 }
 
-const getMovieApi = (params: MovieParams) =>
+export const getMovieApi = (params: MovieParams) =>
   axios.get<IMovieAPIResult>(MOVIE_BASE_URL, {
     params: {
       apiKey: process.env.REACT_APP_MOVIE_APP_KEY,

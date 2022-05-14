@@ -15,8 +15,9 @@
 
 .movieInfoInner {
   display: flex;
-  width: 100%;
+  width: 307px;
   height: 160px;
+  background: #05103a;
   color: colors.$WHITE;
   cursor: pointer;
   border-radius: 20px;
@@ -25,21 +26,26 @@
     margin-top: 10px;
   }
 
+  &.dragList {
+    &:hover {
+      background: linear-gradient(90deg, hsla(191deg, 83%, 61%, 75%) 40%, hsla(247deg, 71%, 75%, 0) 85%);
+    }
+
+    &:hover {
+      .editBtn {
+        background: none;
+      }
+    }
+  }
+
   .posterBlock {
     position: relative;
 
     &.bookmarked {
-      &::before {
+      svg {
         position: absolute;
-        width: 40px;
-        height: 40px;
-        padding-left: 8px;
-        font-size: 22px;
-        text-align: left;
-        content: '★';
-        background-color: #ffcc00;
-        border-top-left-radius: 20px;
-        border-bottom-right-radius: 50px;
+        color: #ffcc00;
+        transform: translate(-118px, -6px);
       }
     }
 
@@ -76,13 +82,17 @@
     right: 28px;
     bottom: 0;
     width: 25px;
-    height: 156px;
-    background: rgba(255, 255, 255, 50%);
+    height: 160px;
+    background: linear-gradient(90deg, transparent, rgba(74, 208, 238, 0.25));
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 
     svg {
       color: colors.$WHITE;
+    }
+
+    &:hover {
+      background: none;
     }
   }
 }

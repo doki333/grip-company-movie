@@ -1,7 +1,7 @@
 import { IMovieItem } from './search.d'
 
 export interface mappingData {
-  data: IMovieItem[]
+  data: IMovieItem[] | []
   scrollEvent?: React.UIEventHandler<HTMLUListElement>
   keyword: string
   isEmpty: Boolean

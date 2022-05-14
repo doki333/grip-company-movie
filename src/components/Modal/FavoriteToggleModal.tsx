@@ -1,7 +1,7 @@
 import store from 'storejs'
 import { PortalCreate } from './PortalCreate'
 import styles from './modal.module.scss'
-import { modalVisibleState, selectedMovieInfo } from 'hooks/state/movie.atom'
+import { favoriteArr, modalVisibleState, selectedMovieInfo } from 'hooks/state/movie.atom'
 import { useRecoil } from 'hooks/state'
 import { AiOutlineClose, AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import { useState } from 'react'
@@ -10,6 +10,7 @@ import { IMovieItem } from 'types/search'
 export const FavoriteToggleModal = () => {
   const [selectedInfo, , resetSelectedInfo] = useRecoil(selectedMovieInfo)
   const [, setIsVisible] = useRecoil(modalVisibleState)
+  const [, setBookmark] = useRecoil(favoriteArr)
 
   const getLocalStorageData = store.get('#M@VIeFavorITe') ?? [] // 로컬 스토리지에 저장되어 있는 데이터 가져오기
 
@@ -28,6 +29,7 @@ export const FavoriteToggleModal = () => {
       // 맨 처음 저장할 때
       store.set('#M@VIeFavorITe', [selectedInfo])
       setIsStored((prev) => !prev)
+      setBookmark([selectedInfo])
       return
     }
     const storedMovieIdx = getLocalStorageData.findIndex((item: IMovieItem) => item.imdbID === selectedInfo.imdbID)
@@ -36,6 +38,7 @@ export const FavoriteToggleModal = () => {
       // localStorage에 데이터를 밀어넣을 때
       store.set('#M@VIeFavorITe', [...getLocalStorageData, selectedInfo])
       setIsStored((prev) => !prev)
+      setBookmark((prev) => [...prev, selectedInfo])
       return
     }
 
@@ -43,6 +46,7 @@ export const FavoriteToggleModal = () => {
     getLocalStorageData.splice(storedMovieIdx, 1)
     store.set('#M@VIeFavorITe', [...getLocalStorageData])
     setIsStored((prev) => !prev)
+    setBookmark(getLocalStorageData)
   }
 
   return (
