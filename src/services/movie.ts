@@ -20,7 +20,7 @@ export const getMovieApi = (params: MovieParams) =>
     },
   })
 
-interface ListParams {
+export interface ListParams {
   s: string
   page: number
   updater: SetterOrUpdater<Array<IMovieItem> | []>
@@ -28,14 +28,18 @@ interface ListParams {
 }
 
 export const getMovieList = (params: ListParams) => {
-  getMovieApi({ s: params.s, page: params.page }).then(({ data }) => {
-    if (data.Response === 'False') params.updater([])
-    else {
-      const changedArr = data.Search.map((movie) => {
-        return { title: movie.Title, poster: movie.Poster, type: movie.Type, year: movie.Year, imdbID: movie.imdbID }
-      })
-      params.updater((prev) => [...prev].concat(...changedArr))
-      params.counter((prev) => ({ ...prev, page: params.page, wholePage: Math.ceil(Number(data.totalResults) / 10) }))
-    }
-  })
+  getMovieApi({ s: params.s, page: params.page })
+    .then(({ data }) => {
+      if (data.Response === 'False') params.updater([])
+      else {
+        const changedArr = data.Search.map((movie) => {
+          return { title: movie.Title, poster: movie.Poster, type: movie.Type, year: movie.Year, imdbID: movie.imdbID }
+        })
+        params.updater((prev) => [...prev].concat(...changedArr))
+        params.counter((prev) => ({ ...prev, page: params.page, wholePage: Math.ceil(Number(data.totalResults) / 10) }))
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }

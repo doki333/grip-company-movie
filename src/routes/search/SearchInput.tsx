@@ -26,12 +26,14 @@ export const SearchInput = React.forwardRef<HTMLInputElement>((props, ref) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (text.trim() === '') return
-    setIsLoad(true)
     resetPageNumber()
     resetMovieList()
     setSearchedState(text)
+    setPageNumber({ page: pageNumber.page + 1, wholePage: pageNumber.wholePage })
+    getMovieList({ s: text, page: pageNumber.page, updater: setMovieList, counter: setPageNumber })
+    setIsLoad(true)
+
     timer = setTimeout(() => {
-      getMovieList({ s: text, page: pageNumber.page, updater: setMovieList, counter: setPageNumber })
       setIsLoad(false)
       return clearTimeout(timer)
     }, 1500)

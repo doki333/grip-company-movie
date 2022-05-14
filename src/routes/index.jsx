@@ -10,6 +10,7 @@ import { FavoriteToggleModal } from 'components/Modal/FavoriteToggleModal'
 import { useRecoil } from 'hooks/state'
 import { modalVisibleState } from 'hooks/state/movie.atom'
 import { Suspense } from 'react'
+import { Spinner } from 'components/Spinner/Spinner'
 
 const App = () => {
   const [isModalVisible] = useRecoil(modalVisibleState)

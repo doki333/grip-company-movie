@@ -6,6 +6,7 @@ export interface initialState {
   isDragging: boolean
   updatedOrder: IMovieItem[] | []
 }
+
 export interface IMovieItem {
   title: string
   year: string

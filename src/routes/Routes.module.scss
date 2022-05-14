@@ -8,11 +8,15 @@
   height: 100vh;
 }
 
-.fallback {
+.suspense {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 360px;
   height: 720px;
-  padding: 50px 30px;
-  color: colors.$WHITE;
-  background: linear-gradient(165deg, #032b64 30%, #161448 75%);
+  padding: 50px 25px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #05103a;
   border-radius: 36px;
+  overflow: hidden;
 }

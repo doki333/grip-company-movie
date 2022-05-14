@@ -70,11 +70,26 @@
         width: 100px;
         padding: 5px 20px;
         margin: 5px;
-        background: #081649;
+        border: 2px solid #2c3759;
         border-radius: 10px;
 
         svg {
           color: #4ad0ee;
+        }
+
+        &:hover {
+          background: #4ad0ee;
+
+          svg {
+            color: #081649;
+          }
+        }
+
+        &.fillStar {
+          background-color: #4ad0ee;
+          svg {
+            color: colors.$WHITE;
+          }
         }
       }
     }

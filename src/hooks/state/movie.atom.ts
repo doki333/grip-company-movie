@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { IMovieArr, IMovieItem, IPageResult } from 'types/search'
+import { IMovieItem, IPageResult } from 'types/search'
 
 export const searchedState = atom<string>({
   key: 'searchState',

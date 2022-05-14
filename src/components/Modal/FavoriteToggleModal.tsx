@@ -6,6 +6,8 @@ import { useRecoil } from 'hooks/state'
 import { AiOutlineClose, AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import { useState } from 'react'
 import { IMovieItem } from 'types/search'
+import { cx } from 'styles'
+import placeholderImg from '../../assets/no-image.jpg'
 
 export const FavoriteToggleModal = () => {
   const [selectedInfo, , resetSelectedInfo] = useRecoil(selectedMovieInfo)
@@ -18,6 +20,8 @@ export const FavoriteToggleModal = () => {
   // 로컬스토리지 안에 있을때
 
   const [isStored, setIsStored] = useState(findItem)
+
+  const { title, poster, year } = selectedInfo
 
   const handleModalClose = () => {
     setIsVisible((prev) => !prev)
@@ -54,15 +58,19 @@ export const FavoriteToggleModal = () => {
       <div className={styles.modalWrapper}>
         <div className={styles.modalInner}>
           <main className={styles.modalInfo}>
-            <img alt='movie Poster' src={selectedInfo.poster} />
+            <img alt='movie Poster' src={poster === 'N/A' ? placeholderImg : poster} />
             <p className={styles.infoTitle}>
-              {selectedInfo.title}
-              <span>({selectedInfo.year})</span>
+              {title}
+              <span>({year})</span>
             </p>
             <p className={styles.noticeText}>{isStored ? `Remove?` : 'Add to Favorites?'}</p>
           </main>
           <div className={styles.modalBtns}>
-            <button type='button' onClick={handleClickStarBtn} className={styles.starBtn}>
+            <button
+              type='button'
+              onClick={handleClickStarBtn}
+              className={cx(styles.starBtn, { [styles.fillStar]: isStored === true })}
+            >
               {isStored ? <AiFillStar size='30px' /> : <AiOutlineStar size='30px' />}
             </button>
             <button type='button' onClick={handleModalClose}>

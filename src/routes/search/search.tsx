@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { LayOut } from 'components/LayOut'
 import { useCallback, useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
@@ -6,28 +6,20 @@ import { isDraggable, isLoading, movieInfo, pageNumberState, searchedState } fro
 import { getMovieList } from 'services/movie'
 import { SearchInput } from './SearchInput'
 import { CommonMovieList } from '../../components/MovieList/commonMovieList'
-import styles from 'styles'
 import { Spinner } from 'components/Spinner/Spinner'
-// import { CommonMovieList } from '../../components/MovieList/commonMovieList'
 
 let timer: NodeJS.Timeout
-
-// const LazyList = React.lazy(async ()=> {
-//  await import('../../components/MovieList/commonMovieList')
-//  return {default: props => <CommonMovieList {...props} />}
-// })
 
 export const Search = () => {
   const msgRef = useRef<HTMLParagraphElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [movieList, setMovieList, resetMovieList] = useRecoil(movieInfo)
-  const [isDragPossible, setIsDragPossible] = useRecoil(isDraggable)
+  const [, setIsDragPossible] = useRecoil(isDraggable)
   const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageNumberState)
   const [isLoad, setIsLoad] = useRecoil(isLoading)
   const [searchedText] = useRecoil(searchedState)
 
-  const isEmpty = movieList.length === 0
   const emptyEmg = '검색 결과가 없습니다.'
 
   useMount(() => {
@@ -71,17 +63,15 @@ export const Search = () => {
 
   return (
     <LayOut title='search'>
+      {isLoad && <Spinner />}
       <SearchInput ref={inputRef} />
-      <Suspense fallback={<Spinner />}>
-        <CommonMovieList
-          data={movieList}
-          keyword='movie'
-          scrollEvent={handleScrollEvent}
-          isEmpty={isEmpty}
-          emptyText={emptyEmg}
-          msgRef={msgRef}
-        />
-      </Suspense>
+      <CommonMovieList
+        data={movieList}
+        keyword='movie'
+        scrollEvent={handleScrollEvent}
+        emptyText={emptyEmg}
+        msgRef={msgRef}
+      />
     </LayOut>
   )
 }
