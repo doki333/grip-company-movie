@@ -1,5 +1,5 @@
 import { useRecoil } from 'hooks/state'
-import { favoriteArr, isDraggable, modalVisibleState, selectedMovieInfo } from 'hooks/state/movie.atom'
+import { favoriteMovieList, isItemDraggable, modalVisibleState, infoOnModalState } from 'hooks/state/movie.atom'
 import { IMovieItem } from 'types/search'
 import styles from './moveItem.module.scss'
 import { cx } from 'styles'
@@ -17,10 +17,10 @@ export const initialDnDstate: initialState = {
 }
 
 export const MovieItem = ({ title, year, type, poster, imdbID }: IMovieItem) => {
-  const [isDragPossible] = useRecoil(isDraggable)
+  const [isDragPossible] = useRecoil(isItemDraggable)
   const [, setShowModal] = useRecoil(modalVisibleState)
-  const [, setSelectedInfo] = useRecoil(selectedMovieInfo)
-  const [bookmark, setBookmark] = useRecoil(favoriteArr)
+  const [, setSelectedInfo] = useRecoil(infoOnModalState)
+  const [bookmark, setBookmark] = useRecoil(favoriteMovieList)
 
   const sliceTitle = title.length >= 25 ? `${title.slice(0, 25)}...` : title
 
@@ -47,6 +47,7 @@ export const MovieItem = ({ title, year, type, poster, imdbID }: IMovieItem) => 
     initialDnDstate.draggedTo = lastPosition
 
     let newList = [...bookmark]
+
     const { draggedFrom } = initialDnDstate
     const itemDragged = newList[draggedFrom]
     const remainingItems = newList.filter((item, index) => index !== draggedFrom)

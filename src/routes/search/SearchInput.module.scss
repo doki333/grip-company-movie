@@ -10,11 +10,11 @@
     padding-left: 45px;
     font-size: 18px;
     color: colors.$WHITE;
-    background: #2c3759;
+    background: colors.$POINT2_GRAY;
     border-radius: 20px;
 
     &::placeholder {
-      color: #626a84;
+      color: colors.$NAV_NOTACTIVE;
     }
   }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { LayOut } from 'components/LayOut'
 import { useCallback, useMount, useRef, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
-import { isDraggable, isLoading, movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
+import { isItemDraggable, isLoading, movieApiInfo, pageCountState, searchedTxtState } from 'hooks/state/movie.atom'
 import { getMovieList } from 'services/movie'
 import { SearchInput } from './SearchInput'
 import { CommonMovieList } from '../../components/MovieList/commonMovieList'
@@ -14,11 +14,11 @@ export const Search = () => {
   const msgRef = useRef<HTMLParagraphElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const [movieList, setMovieList, resetMovieList] = useRecoil(movieInfo)
-  const [, setIsDragPossible] = useRecoil(isDraggable)
-  const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageNumberState)
+  const [movieList, setMovieList, resetMovieList] = useRecoil(movieApiInfo)
+  const [, setIsDragPossible] = useRecoil(isItemDraggable)
+  const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageCountState)
   const [isLoad, setIsLoad] = useRecoil(isLoading)
-  const [searchedText] = useRecoil(searchedState)
+  const [searchedText] = useRecoil(searchedTxtState)
 
   const emptyEmg = '검색 결과가 없습니다.'
 
@@ -55,7 +55,7 @@ export const Search = () => {
         timer = setTimeout(() => {
           getMovieList({ s: searchedText, page: pageNumber.page + 1, updater: setMovieList, counter: setPageNumber }) // 다음 페이지 데이터 불러오기
           setIsLoad(false)
-        }, 200)
+        }, 150)
       }
     },
     [pageNumber, searchedText, setMovieList, setPageNumber, setIsLoad, isLoad]

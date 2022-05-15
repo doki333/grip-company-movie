@@ -1,13 +1,13 @@
 import { atom } from 'recoil'
 import { IMovieItem, IPageResult } from 'types/search'
 
-export const searchedState = atom<string>({
-  key: 'searchState',
+export const searchedTxtState = atom<string>({
+  key: '#searchedText',
   default: '',
 })
 
-export const pageNumberState = atom<IPageResult>({
-  key: 'pageNumber',
+export const pageCountState = atom<IPageResult>({
+  key: '#pageSetting',
   default: {
     page: 1,
     wholePage: 0,
@@ -15,33 +15,33 @@ export const pageNumberState = atom<IPageResult>({
 })
 
 export const modalVisibleState = atom<Boolean>({
-  key: 'modalState',
+  key: '#modalState',
   default: false,
 })
 
-export const selectedMovieInfo = atom({
+export const infoOnModalState = atom({
   // 모달창에서 추가할 아이템
-  key: 'selectedMovieInfo',
+  key: '#selectedInfoOnModal',
   default: {} as IMovieItem,
 })
 
-export const movieInfo = atom<Array<IMovieItem> | []>({
+export const movieApiInfo = atom<Array<IMovieItem> | []>({
   // API로 불러온 아이템 배열
-  key: 'movieState',
+  key: '#wholeMovieInfoArray',
   default: [],
 })
 
 export const isLoading = atom<Boolean>({
-  key: 'isLoadingState',
+  key: '#isLoadingNow',
   default: false,
 })
 
-export const isDraggable = atom<Boolean>({
-  key: 'isListDraggableState',
+export const isItemDraggable = atom<Boolean>({
+  key: '#isDraggableListNow',
   default: false,
 })
 
-export const favoriteArr = atom<Array<IMovieItem> | []>({
-  key: 'favoriteMovieState',
+export const favoriteMovieList = atom<Array<IMovieItem> | []>({
+  key: '#favoriteMovieArray',
   default: [],
 })

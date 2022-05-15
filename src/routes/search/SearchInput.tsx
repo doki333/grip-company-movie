@@ -2,15 +2,15 @@ import React, { useCallback, useState } from 'react'
 import styles from './SearchInput.module.scss'
 import { SearchIcon } from 'assets/svgs'
 import { useRecoil } from 'hooks/state'
-import { isLoading, movieInfo, pageNumberState, searchedState } from 'hooks/state/movie.atom'
+import { isLoading, movieApiInfo, pageCountState, searchedTxtState } from 'hooks/state/movie.atom'
 import { getMovieList } from 'services/movie'
 
 let timer: NodeJS.Timeout
 
 export const SearchInput = React.forwardRef<HTMLInputElement>((props, ref) => {
-  const [, setMovieList, resetMovieList] = useRecoil(movieInfo)
-  const [, setSearchedState] = useRecoil(searchedState)
-  const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageNumberState)
+  const [, setMovieList, resetMovieList] = useRecoil(movieApiInfo)
+  const [, setSearchedState] = useRecoil(searchedTxtState)
+  const [, setPageNumber, resetPageNumber] = useRecoil(pageCountState)
   const [, setIsLoad] = useRecoil(isLoading)
 
   const [text, setText] = useState('')
@@ -26,17 +26,16 @@ export const SearchInput = React.forwardRef<HTMLInputElement>((props, ref) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (text.trim() === '') return
+    setIsLoad(true)
     resetPageNumber()
     resetMovieList()
     setSearchedState(text)
-    setPageNumber({ page: pageNumber.page + 1, wholePage: pageNumber.wholePage })
-    getMovieList({ s: text, page: pageNumber.page, updater: setMovieList, counter: setPageNumber })
-    setIsLoad(true)
+    getMovieList({ s: text, page: 1, updater: setMovieList, counter: setPageNumber })
 
     timer = setTimeout(() => {
       setIsLoad(false)
       return clearTimeout(timer)
-    }, 1500)
+    }, 1000)
   }
 
   return (

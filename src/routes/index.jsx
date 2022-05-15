@@ -1,16 +1,11 @@
 import styles from './Routes.module.scss'
 import { Routes, Route } from 'react-router-dom'
-// import TodoList from './TodoList'
-// import Weather from './Weathers'
-// import GNB from 'routes/_shared/GNB'
 import { Search } from './search/search'
 import { Favorites } from './favorites/favorites'
 import { NavTab } from './_shared/NavTab'
 import { FavoriteToggleModal } from 'components/Modal/FavoriteToggleModal'
 import { useRecoil } from 'hooks/state'
 import { modalVisibleState } from 'hooks/state/movie.atom'
-import { Suspense } from 'react'
-import { Spinner } from 'components/Spinner/Spinner'
 
 const App = () => {
   const [isModalVisible] = useRecoil(modalVisibleState)

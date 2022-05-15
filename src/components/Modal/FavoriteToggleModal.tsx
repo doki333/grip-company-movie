@@ -1,7 +1,7 @@
 import store from 'storejs'
 import { PortalCreate } from './PortalCreate'
 import styles from './modal.module.scss'
-import { favoriteArr, modalVisibleState, selectedMovieInfo } from 'hooks/state/movie.atom'
+import { favoriteMovieList, modalVisibleState, infoOnModalState } from 'hooks/state/movie.atom'
 import { useRecoil } from 'hooks/state'
 import { AiOutlineClose, AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import { useState } from 'react'
@@ -10,9 +10,9 @@ import { cx } from 'styles'
 import placeholderImg from '../../assets/no-image.jpg'
 
 export const FavoriteToggleModal = () => {
-  const [selectedInfo, , resetSelectedInfo] = useRecoil(selectedMovieInfo)
+  const [selectedInfo, , resetSelectedInfo] = useRecoil(infoOnModalState)
   const [, setIsVisible] = useRecoil(modalVisibleState)
-  const [, setBookmark] = useRecoil(favoriteArr)
+  const [, setBookmark] = useRecoil(favoriteMovieList)
 
   const getLocalStorageData = store.get('#M@VIeFavorITe') ?? [] // 로컬 스토리지에 저장되어 있는 데이터 가져오기
 
