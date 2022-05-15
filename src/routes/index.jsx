@@ -6,6 +6,7 @@ import { NavTab } from './_shared/NavTab'
 import { FavoriteToggleModal } from 'components/Modal/FavoriteToggleModal'
 import { useRecoil } from 'hooks/state'
 import { modalVisibleState } from 'hooks/state/movie.atom'
+import { NotFound } from 'components/NotFound/NotFound'
 
 const App = () => {
   const [isModalVisible] = useRecoil(modalVisibleState)
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Search />} />
           <Route path='/favorites' element={<Favorites />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <NavTab />
       </div>

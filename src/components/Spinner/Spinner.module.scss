@@ -7,6 +7,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(359deg);
   }
@@ -30,9 +31,9 @@
     height: 50px;
     content: '';
     background: transparent;
-    border: 6px solid #2c3759;
-    border-top-color: #4ad0ee;
-    border-bottom-color: #4ad0ee;
+    border: 6px solid colors.$APP_BACKGROUND;
+    border-top-color: colors.$POINT_SKYBLUE;
+    border-bottom-color: colors.$POINT_SKYBLUE;
     border-radius: 50%;
     animation: spinner 0.8s ease infinite;
   }

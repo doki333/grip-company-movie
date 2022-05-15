@@ -7,13 +7,14 @@ import { SearchIcon } from 'assets/svgs'
 export const NavTab = () => {
   const { pathname } = useLocation()
   const isSearching = pathname === '/'
+  const isFavorite = pathname === '/favorites'
   return (
     <nav className={styles.navWrapper}>
       <NavLink to='/' className={cx({ [styles.isSearching]: isSearching })}>
         <SearchIcon />
       </NavLink>
-      <NavLink to='/favorites' className={cx({ [styles.isActive]: !isSearching })}>
-        {pathname === '/favorites' ? <BsBookmarkStarFill size='30px' /> : <BsBookmarkStar size='30px' />}
+      <NavLink to='/favorites' className={cx({ [styles.isActive]: isFavorite })}>
+        {isFavorite === true ? <BsBookmarkStarFill size='30px' /> : <BsBookmarkStar size='30px' />}
       </NavLink>
     </nav>
   )

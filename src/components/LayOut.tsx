@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './LayOut.module.scss'
-import { Spinner } from './Spinner/Spinner'
 
 interface layoutTypes {
   children: React.ReactNode

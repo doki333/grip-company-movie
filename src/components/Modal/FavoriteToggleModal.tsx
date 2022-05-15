@@ -71,9 +71,9 @@ export const FavoriteToggleModal = () => {
               onClick={handleClickStarBtn}
               className={cx(styles.starBtn, { [styles.fillStar]: isStored === true })}
             >
-              {isStored ? <AiFillStar size='30px' /> : <AiOutlineStar size='30px' />}
+              {isStored ? <AiFillStar size='30px' /> : <AiOutlineStar color='white' size='30px' />}
             </button>
-            <button type='button' onClick={handleModalClose}>
+            <button type='button' onClick={handleModalClose} className={styles.cancelBtn}>
               <AiOutlineClose size='30px' />
             </button>
           </div>

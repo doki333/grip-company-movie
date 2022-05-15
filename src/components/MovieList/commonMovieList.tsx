@@ -9,7 +9,7 @@ export const CommonMovieList = ({ data, scrollEvent, keyword, emptyText, msgRef 
   return (
     <div className={styles.movieListWrapper}>
       {data.length === 0 ? (
-        <p>{emptyText}</p>
+        <p className={styles.initialMsg}>{emptyText}</p>
       ) : (
         <ul onScroll={scrollEvent} className={cx(styles.itemsWrapper, { [styles.isTaller]: !isKeywordMovie })}>
           {data.map((item, index) => (

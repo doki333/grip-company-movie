@@ -6,7 +6,7 @@ import { cx } from 'styles'
 import store from 'storejs'
 import { IoIosBookmark } from 'react-icons/io'
 import placeholderImg from 'assets/no-image.jpg'
-import { CgMenuGridO } from 'react-icons/cg'
+import { MdDragIndicator } from 'react-icons/md'
 import { initialState } from 'types/movieItem'
 
 export const initialDnDstate: initialState = {
@@ -85,7 +85,7 @@ export const MovieItem = ({ title, year, type, poster, imdbID }: IMovieItem) => 
           alt='movie poster'
           aria-label='movie poster'
         />
-        {isBookmarked !== -1 && <IoIosBookmark size='45px' />}
+        {isBookmarked !== -1 && <IoIosBookmark size='55px' />}
       </div>
       <div className={styles.infoBlock}>
         <p className={styles.titleText}>{sliceTitle}</p>
@@ -93,8 +93,8 @@ export const MovieItem = ({ title, year, type, poster, imdbID }: IMovieItem) => 
         <p className={styles.typeText}>Type: {type}</p>
       </div>
       {isDragPossible && (
-        <button type='button' className={styles.editBtn}>
-          <CgMenuGridO size='25px' />
+        <button type='button' className={styles.dragBtn}>
+          <MdDragIndicator size='26px' color='white' />
         </button>
       )}
     </li>

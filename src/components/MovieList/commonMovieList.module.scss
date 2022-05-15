@@ -17,6 +17,11 @@
   margin-top: 10px;
   text-align: center;
 
+  .initialMsg {
+    margin-top: 20px;
+    color: colors.$ALERT_COLOR;
+  }
+
   .itemsWrapper {
     height: 510px;
     overflow-y: scroll;
@@ -39,8 +44,9 @@
       padding: 10px;
       margin: 10px;
       font-size: 20px;
+      color: colors.$ALERT_COLOR;
       text-align: center;
-      animation: showUp 2s ease infinite alternate;
+      animation: showUp 1s ease infinite alternate;
     }
   }
 

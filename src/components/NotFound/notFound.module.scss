@@ -3,21 +3,39 @@
 @use '/src/styles/mixins/flexbox';
 @use '/src/styles/mixins/position';
 
-.layOutWrapper {
+@keyframes rotateImoji {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(3);
+  }
+}
+
+.notFound {
+  @include flexbox.flexbox('center', 'center');
+  flex-direction: column;
   width: 360px;
   height: 720px;
   padding: 50px 25px;
   overflow: hidden;
   font-family: 'Noto Sans KR', sans-serif;
   color: colors.$POINT_SKYBLUE;
+  text-align: center;
   background: colors.$APP_BACKGROUND;
   border-radius: 36px;
 
   h1 {
-    margin-bottom: 15px;
-    font-size: 26px;
+    font-size: 50px;
     font-weight: 600;
-    text-align: center;
+    color: colors.$ALERT_COLOR;
     text-transform: uppercase;
+  }
+
+  p {
+    margin-top: 80px;
+    font-size: 90px;
+    animation: rotateImoji 1.4s ease-in infinite alternate;
   }
 }

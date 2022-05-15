@@ -15,13 +15,13 @@
 
 .movieInfoInner {
   display: flex;
-  width: 307px;
+  width: 300px;
   height: 160px;
-  background: #05103a;
+  margin-top: 2px;
   color: colors.$WHITE;
   cursor: pointer;
+  background: #05103a;
   border-radius: 20px;
-  margin-top: 2px;
 
   & + & {
     margin-top: 10px;
@@ -29,11 +29,9 @@
 
   &.dragList {
     &:hover {
-      background: linear-gradient(90deg, hsla(191deg, 83%, 61%, 75%) 38%, hsla(247deg, 71%, 75%, 0) 85%);
-    }
+      background: linear-gradient(90deg, hsla(191deg, 83%, 61%, 75%) 36%, hsla(247deg, 71%, 75%, 0%) 67%);
 
-    &:hover {
-      .editBtn {
+      .dragBtn {
         background: none;
       }
     }
@@ -45,8 +43,8 @@
     &.bookmarked {
       svg {
         position: absolute;
-        color: #ffcc00;
-        transform: translate(-118px, -6px);
+        color: colors.$BOOKMARK;
+        transform: translate(-120px, -6px);
       }
     }
 
@@ -61,12 +59,14 @@
 
   .infoBlock {
     width: 180px;
+    padding: 10px 35px;
+    padding-left: 5px;
     margin-left: 10px;
     text-align: left;
 
     .titleText {
       display: block;
-      width: 180px;
+      width: 153px;
       max-height: 55px;
       overflow: hidden;
       font-size: 22px;
@@ -78,19 +78,16 @@
     }
   }
 
-  .editBtn {
+  .dragBtn {
     position: relative;
     right: 28px;
     bottom: 0;
-    width: 25px;
+    width: 48px;
     height: 160px;
-    background: linear-gradient(90deg, transparent, rgba(74, 208, 238, 0.25));
+    color: colors.$WHITE;
+    background: linear-gradient(90deg, transparent, rgba(74, 208, 238, 25%));
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-
-    svg {
-      color: colors.$WHITE;
-    }
 
     &:hover {
       background: none;

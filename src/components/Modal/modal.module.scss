@@ -56,10 +56,11 @@
         font-weight: 600;
         letter-spacing: 3px;
       }
+
       .noticeText {
-        font-size: 14px;
         margin-top: 10px;
-        color: #f77171;
+        font-size: 14px;
+        color: colors.$ALERT_COLOR;
       }
     }
 
@@ -70,25 +71,28 @@
         width: 100px;
         padding: 5px 20px;
         margin: 5px;
-        border: 2px solid #2c3759;
+        background: colors.$POINT2_GRAY;
         border-radius: 10px;
 
+        &.fillStar {
+          svg {
+            color: colors.$POINT_SKYBLUE;
+          }
+        }
+      }
+
+      .cancelBtn {
+        background: colors.$ALERT_COLOR;
+
         svg {
-          color: #4ad0ee;
+          color: colors.$POINT2_GRAY;
         }
 
         &:hover {
-          background: #4ad0ee;
+          background: colors.$POINT2_GRAY;
 
           svg {
-            color: #081649;
-          }
-        }
-
-        &.fillStar {
-          background-color: #4ad0ee;
-          svg {
-            color: colors.$WHITE;
+            color: colors.$ALERT_COLOR;
           }
         }
       }
