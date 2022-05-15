@@ -1,5 +1,5 @@
 import styles from './Routes.module.scss'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { Search } from './search/search'
 import { Favorites } from './favorites/favorites'
 import { NavTab } from './_shared/NavTab'
@@ -14,12 +14,14 @@ const App = () => {
     <div className={styles.appWrapper}>
       {isModalVisible && <FavoriteToggleModal />}
       <div className={styles.app}>
-        <Routes>
-          <Route path='/' element={<Search />} />
-          <Route path='/favorites' element={<Favorites />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-        <NavTab />
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <Routes>
+            <Route exact path='/' element={<Search />} />
+            <Route path='/favorites' element={<Favorites />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+          <NavTab />
+        </BrowserRouter>
       </div>
     </div>
   )

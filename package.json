@@ -1,4 +1,5 @@
-{ "homepage" : "https://doki333.github.io/grip-company-movie",
+{
+  "homepage": "https://doki333.github.io/grip-company-movie",
   "name": "foundation-ts",
   "version": "0.1.0",
   "private": true,
