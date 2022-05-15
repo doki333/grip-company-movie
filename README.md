@@ -28,7 +28,15 @@
 - storeJs : localStorage에 있는 즐겨찾기 목록을 관리하기 위해 사용하였습니다.   
 
 4. Usage Example
+
+- search
 <img src="search.gif" width="500px" alt="search function usage" title="search example" />
+
+- favorites
 <img src="favorites.gif" width="500px" alt="add favorites function usage" title="favorites example" />
+
+- favoriteList
 <img src="favoritelist.gif" width="500px" alt="favorite list function usage" title="favorite list example" />
-<img src="scorll.gif" width="500px" alt="infinite scroll usage" title="scroll example" />
+
+-infinite scroll
+<img src="scroll.gif" width="500px" alt="infinite scroll usage" title="scroll example" />
