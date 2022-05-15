@@ -38,5 +38,5 @@
 - favoriteList
 <img src="favoritelist.gif" width="500px" alt="favorite list function usage" title="favorite list example" />
 
--infinite scroll
+- infinite scroll
 <img src="scroll.gif" width="500px" alt="infinite scroll usage" title="scroll example" />
