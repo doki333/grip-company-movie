@@ -1,77 +1,65 @@
-import React from 'react'
-import { LayOut } from 'components/LayOut'
-import { useCallback, useMount, useRef, useUnmount } from 'hooks'
-import { useRecoil } from 'hooks/state'
-import { isItemDraggable, isLoading, movieApiInfo, pageCountState, searchedTxtState } from 'hooks/state/movie.atom'
-import { getMovieList } from 'services/movie'
-import { SearchInput } from './SearchInput'
-import { CommonMovieList } from '../../components/MovieList/commonMovieList'
+import { useInfiniteQuery } from 'react-query'
+import { useInView } from 'react-intersection-observer'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { RootState } from 'store/store'
+import { search } from 'store/reducers/movieReducer'
+
+import { LayOut } from 'components/LayOut/LayOut'
+import CommonMovieList from 'components/MovieList/commonMovieList'
 import { Spinner } from 'components/Spinner/Spinner'
+import SearchInput from './SearchInput'
 
-let timer: NodeJS.Timeout
+import { useEffect, useRef, useUnmount } from 'hooks'
+import { handleMovieList } from 'services/movie'
 
-export const Search = () => {
-  const msgRef = useRef<HTMLParagraphElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+import styles from './search.module.scss'
 
-  const [movieList, setMovieList, resetMovieList] = useRecoil(movieApiInfo)
-  const [, setIsDragPossible] = useRecoil(isItemDraggable)
-  const [pageNumber, setPageNumber, resetPageNumber] = useRecoil(pageCountState)
-  const [isLoad, setIsLoad] = useRecoil(isLoading)
-  const [searchedText] = useRecoil(searchedTxtState)
+export const SearchFor = () => {
+  const { ref, inView } = useInView()
+  const scrollRef = useRef(null)
+  const dispatch = useDispatch()
 
-  const emptyEmg = '검색 결과가 없습니다.'
+  const qKeyword = useSelector((state: RootState) => state.movie.value)
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    [qKeyword, '#movies'],
+    ({ pageParam = 1 }) => handleMovieList({ s: qKeyword, page: pageParam }),
+    {
+      getNextPageParam: (next) => {
+        if (next.currentPage > next.totalPage || isNaN(next.totalPage)) return undefined
+        return next.currentPage + 1
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      cacheTime: 0,
+      suspense: true,
+      enabled: !!qKeyword,
+      initialData: undefined,
+    }
+  )
 
-  useMount(() => {
-    setMovieList([])
-    setIsDragPossible(false)
-    if (inputRef.current) inputRef.current.focus()
-  })
+  useEffect(() => {
+    if (inView) fetchNextPage()
+  }, [dispatch, fetchNextPage, inView])
 
   useUnmount(() => {
-    resetPageNumber()
-    resetMovieList()
-    setIsLoad(false)
-    setIsDragPossible((prev) => !prev)
+    dispatch(search(''))
   })
-
-  const handleScrollEvent = useCallback(
-    (e: React.UIEvent<HTMLUListElement>) => {
-      const { scrollHeight, scrollTop, clientHeight } = e.currentTarget
-      const isAtEnd = scrollHeight <= Math.ceil(scrollTop + clientHeight)
-
-      if (pageNumber.page >= pageNumber.wholePage && msgRef.current) {
-        // 페이지가 끝으로 가면 다 됐다는 메세지 보여주고 리턴
-        msgRef.current.style.display = 'block'
-        return
-      }
-
-      if (isAtEnd) {
-        if (isLoad === true) return // 로딩중이면 리턴
-        setIsLoad(true)
-        if (timer) {
-          clearTimeout(timer)
-        }
-        timer = setTimeout(() => {
-          getMovieList({ s: searchedText, page: pageNumber.page + 1, updater: setMovieList, counter: setPageNumber }) // 다음 페이지 데이터 불러오기
-          setIsLoad(false)
-        }, 150)
-      }
-    },
-    [pageNumber, searchedText, setMovieList, setPageNumber, setIsLoad, isLoad]
-  )
 
   return (
     <LayOut title='search'>
-      {isLoad && <Spinner />}
-      <SearchInput ref={inputRef} />
-      <CommonMovieList
-        data={movieList}
-        keyword='movie'
-        scrollEvent={handleScrollEvent}
-        emptyText={emptyEmg}
-        msgRef={msgRef}
-      />
+      <SearchInput scrollRefer={scrollRef} />
+      {!data && <p>검색 결과가 없습니다.</p>}
+      {data && (
+        <div className={styles.listWrapper} ref={scrollRef}>
+          {data.pages.map((hello) => (
+            <CommonMovieList listThing={hello.movieList} key={`lists-${hello.currentPage}`} />
+          ))}
+          {hasNextPage && <Spinner ref={ref} />}
+          {!hasNextPage && <p>검색 결과가 없습니다.</p>}
+        </div>
+      )}
     </LayOut>
   )
 }

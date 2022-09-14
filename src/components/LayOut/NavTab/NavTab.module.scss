@@ -1,0 +1,32 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.navWrapper {
+  @include flexbox.flexbox('around', 'center');
+  position: absolute;
+  bottom: 0;
+  width: 360px;
+  padding: 20px;
+  transform: translate(-25px, 0);
+
+  a {
+    color: colors.$NAV_NOTACTIVE;
+    text-align: center;
+  }
+
+  .isActive {
+    svg {
+      color: colors.$WHITE;
+    }
+  }
+
+  .isSearching {
+    svg {
+      color: colors.$WHITE;
+      stroke: colors.$WHITE;
+      stroke-width: 1px;
+    }
+  }
+}

@@ -1,51 +1,44 @@
-import React, { useCallback, useState } from 'react'
-import styles from './SearchInput.module.scss'
+import { FormEvent, ChangeEvent, useCallback } from 'react'
 import { SearchIcon } from 'assets/svgs'
-import { useRecoil } from 'hooks/state'
-import { isLoading, movieApiInfo, pageCountState, searchedTxtState } from 'hooks/state/movie.atom'
-import { getMovieList } from 'services/movie'
+import { useState } from 'hooks'
 
-let timer: NodeJS.Timeout
+import styles from './searchInput.module.scss'
+import { useDispatch } from 'react-redux'
+import { search } from 'store/reducers/movieReducer'
 
-export const SearchInput = React.forwardRef<HTMLInputElement>((props, ref) => {
-  const [, setMovieList, resetMovieList] = useRecoil(movieApiInfo)
-  const [, setSearchedState] = useRecoil(searchedTxtState)
-  const [, setPageNumber, resetPageNumber] = useRecoil(pageCountState)
-  const [, setIsLoad] = useRecoil(isLoading)
+interface ISearchInputProps {
+  scrollRefer: any
+}
 
+const SearchInput = ({ scrollRefer }: ISearchInputProps) => {
   const [text, setText] = useState('')
+  const dispatch = useDispatch()
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const { value } = e.currentTarget
-      setText(value)
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     },
     [setText]
   )
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSumbitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (text.trim() === '') return
-    setIsLoad(true)
-    resetPageNumber()
-    resetMovieList()
-    setSearchedState(text)
-    getMovieList({ s: text, page: 1, updater: setMovieList, counter: setPageNumber })
-
-    timer = setTimeout(() => {
-      setIsLoad(false)
-      return clearTimeout(timer)
-    }, 1000)
+    const newTxt = text.trim()
+    if (newTxt === '') return
+    dispatch(search(text))
+    if (scrollRefer.current !== null) {
+      scrollRefer.current.scrollTop = 0
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.searchForm}>
+    <form onSubmit={handleSumbitForm} className={styles.searchForm}>
       <button type='submit'>
-        <SearchIcon />
+        <SearchIcon color='white' />
       </button>
-      <input type='text' onChange={handleInputChange} ref={ref} placeholder='Search Movie' />
+      <input type='text' value={text} onChange={handleChange} placeholder='Search Movie' />
     </form>
   )
-})
+}
 
-SearchInput.displayName = 'SearchInput'
+export default SearchInput

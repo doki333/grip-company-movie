@@ -1,34 +1,27 @@
-import styles from './commonMovieList.module.scss'
-import { MovieItem } from 'components/MovieItem/MovieItem'
-import { cx } from 'styles'
-import { mappingData } from 'types/moveList'
+import { IMovieArr } from 'types/search'
+import MovieItem2 from 'components/MovieItem/MovieItem2'
+import styles from './movieList2.module.scss'
 
-export const CommonMovieList = ({ data, scrollEvent, keyword, emptyText, msgRef }: mappingData) => {
-  const isKeywordMovie = keyword === 'movie'
+interface ICommonMovieList {
+  listThing: IMovieArr[] | undefined
+}
 
+const CommonMovieList = ({ listThing }: ICommonMovieList) => {
   return (
-    <div className={styles.movieListWrapper}>
-      {data.length === 0 ? (
-        <p className={styles.initialMsg}>{emptyText}</p>
-      ) : (
-        <ul onScroll={scrollEvent} className={cx(styles.itemsWrapper, { [styles.isTaller]: !isKeywordMovie })}>
-          {data.map((item, index) => (
-            <MovieItem
-              title={item.title}
-              year={item.year}
-              type={item.type}
-              imdbID={item.imdbID}
-              poster={item.poster}
-              key={`${keyword}-${index + Math.random()}`}
-            />
-          ))}
-          {isKeywordMovie && (
-            <p ref={msgRef} className={styles.endMsg}>
-              {emptyText}
-            </p>
-          )}
-        </ul>
-      )}
-    </div>
+    <ul className={styles.movieBlockWrapper}>
+      {listThing &&
+        listThing.map((l) => (
+          <MovieItem2
+            key={`movieItem-${l.imdbID}`}
+            title={l.Title}
+            year={l.Year}
+            type={l.Type}
+            imdbID={l.imdbID}
+            poster={l.Poster}
+          />
+        ))}
+    </ul>
   )
 }
+
+export default CommonMovieList

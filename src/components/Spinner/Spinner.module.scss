@@ -14,24 +14,21 @@
 }
 
 .spinnerWrapper {
-  position: absolute;
-  z-index: 10;
-  width: 400px;
-  height: 720px;
-  background: rgba(255, 255, 255, 25%);
+  width: 360px;
+  height: 60px;
   border-radius: 36px;
-  transform: translate(-16%, -12%);
+  transform: translate(-11%, -20%);
 
   &::before {
     position: relative;
     top: 50%;
     left: 50%;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     content: '';
     background: transparent;
-    border: 6px solid colors.$APP_BACKGROUND;
+    border: 5px solid colors.$APP_BACKGROUND;
     border-top-color: colors.$POINT_SKYBLUE;
     border-bottom-color: colors.$POINT_SKYBLUE;
     border-radius: 50%;

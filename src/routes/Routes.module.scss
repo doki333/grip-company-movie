@@ -1,9 +1,78 @@
 @use '/src/styles/constants/colors';
 
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
 .appWrapper {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+
+  .suspenser {
+    position: absolute;
+    z-index: 10;
+    width: 360px;
+    height: 720px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 720px;
+    color: colors.$WHITE;
+    text-align: center;
+    background: colors.$APP_BACKGROUND;
+    border-radius: 36px;
+
+    .circle {
+      position: absolute;
+      display: block;
+      width: 360px;
+      height: 600px;
+      border-radius: 36px;
+      transform: translate(-14%, 2%);
+
+      &::before {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        display: block;
+        width: 100px;
+        height: 100px;
+        content: '';
+        background: transparent;
+        border: 5px solid colors.$APP_BACKGROUND;
+        border-top-color: colors.$POINT_SKYBLUE;
+        border-bottom-color: colors.$POINT_SKYBLUE;
+        border-radius: 50%;
+        animation: spinner 0.8s ease infinite;
+      }
+    }
+  }
+}
+
+.app {
+  position: relative;
+  width: 360px;
+  height: 720px;
+  padding: 50px 25px;
+  overflow: hidden;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: colors.$POINT_SKYBLUE;
+  background: colors.$APP_BACKGROUND;
+  border-radius: 36px;
+
+  h1 {
+    margin-bottom: 15px;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+  }
 }
