@@ -1,5 +1,9 @@
 # 그립 컴퍼니 기업과제 movie-app   
 
+> 기존에 있었던 무한스크롤 오류를 다른 라이브러리를 통해 수정하였고, 전역상태 관리를 위해 사용하던 recoil을 redux-toolkit으로 대체하였습니다. 
+
+
+
 1. 기능   
 - 영화 검색  
 - 영화 즐겨찾기 및 조회   
@@ -7,36 +11,38 @@
 
 
 2. 기능 구현 과정   
- - 영화 검색   
- axios로 api를 불러와서 데이터가 있으면 movieList라는 recoil state에 업도드를 시켜줄 수 있도록 하였습니다. 그리고 새로운 데이터를 검색할때 마다 state를 reset시켜주었습니다.    
+ - 영화 검색과 무한 스크롤    
+ axios로 api를 콜해서 데이터가 있으면 띄우고, react-intersection-observer와 react-query를 사용해서 스크롤을 할 때마다 새로운 데이터를 불러올 수 있게 하였습니다. 그리고 unmount시에 검색어를 초기화하여 페이지를 이동할때마다 데이터를 reset할 수 있도록 하였습니다. 검색 결과가 없는 경우 검색 결과가 없다는 메세지를 추가하였습니다.   
     
- - 영화 조회와 즐겨찾기   
-  영화 검색 이후에 영화의 정보들을 movieItem이라는 컴포넌트에 담고, 스크롤을 내리면 기존의 검색 정보를 가지고 있던 movieList를 업데이트 시키면서, 새로운 정보를 불러와도 앞서 불러온 정보를 계속 조회할 수 있도록 하였습니다. 또한 영화 즐겨찾기 기능을 위한 모달창을 createPortal을 통해 만들었습니다. 모달창을 클릭하면 클릭한 영화의 정보를 selectedInfo라는 recoil state에 업로드를 하여, 즐겨찾기 목록에 추가할 수 있도록 하였습니다.    
-     
-  - 무한 스크롤   
-  무한 스크롤을 위해 영화 아이템들을 담고 있는 ul의 scrollTop과 scrollHeight를 이용했습니다. 스크롤이 끝에 갔다고 인식을 하면, api를 불러오는 함수에 페이지를 추가해서 다음 데이터를 불러올 수 있도록 했습니다. 처음에 데이터를 조회했을 때 나오는 totalResults를 10으로 나눈 값과 현재 페이지 카운트 수를 비교해서 현재 페이지 숫자가 총 결과 페이지보다 같거나 크면 검색 결과가 더 이상 없다는 메세지를 띄울 수 있게 하였습니다.   
-     
+ - 영화 조회와 즐겨찾기    
+ 영화 검색 이후에 영화 정보들은 movieItem이라는 컴포넌트에 담았고, 해당 영화를 클릭하면 즐겨찾기에 추가할 수 있는 모달창을 띄울 수 있게 하였습니다.    
+
  - 즐겨찾기 저장   
-  창을 닫고 다시 들어와도 즐겨찾기 목록을 계속 조회할 수 있도록 하기 위해 storeJs를  사용하였습니다. localStorage에 키값이 아예 없는 경우, 있는 경우를 나눠서 저장할 수 있도록 했습니다. 즐겨찾기 목록을 관리하기 위한 recoil state를 따로 만들어서 실시간으로 즐겨찾기를 제거하고 추가하는 것이 가능하게 했습니다.    
+  창을 닫고 다시 들어와도 즐겨찾기 목록을 계속 조회할 수 있도록 하기 위해 storeJs를  사용하였습니다. localStorage에 키값이 아예 없는 경우, 있는 경우를 나눠서 저장할 수 있도록 했습니다.   
      
- - 즐겨찾기 순서 바꾸기     
- 드래그를 통해 즐겨찾기의 순서를 바꾸는 기능을 구현하고자 했습니다. dragStart를 통해 현재 클릭한 영화의 인덱스를 저장하고, dragOver을 통해 위치를 바꾸고 싶은 아이템의 인덱스를 조회하고 드롭을 하면 위치를 바꾸고, 순서가 바뀐 배열을 localStroage에 다시 넣어주었습니다.   
+ - 즐겨찾기 순서 바꾸기       
+ 드래그를 통해 즐겨찾기의 순서를 바꾸는 기능을 구현하고자 했습니다. dragStart를 통해 현재 클릭한 영화의 인덱스를 저장하고, dragEnter를 통해 위치를 바꾸고 싶은 아이템의 인덱스를 조회하고 드롭을 하면 순서를 바꾸고, 그 배열을 localStroage에 다시 저장하도록 하였습니다.   
     
 
  3.Dependencies
-- recoil : 전역 상태 관리를 위해 사용하였습니다.   
-- storeJs : localStorage에 있는 즐겨찾기 목록을 관리하기 위해 사용하였습니다.   
+- redux-toolkit : 전역 상태 관리를 위해 사용하였습니다.      
+- react-query : api를 불러오고, 데이터를 캐싱하기 위해 사용하였습니다.   
+- react-intersection-observer : 무한 스크롤로 데이터를 불러 오기 위해 사용하였습니다.   
+- storeJs : localStorage에 있는 즐겨찾기 목록을 관리하기 위해 사용하였습니다.    
 
 4. Usage Example
 
 - search
-<img src="search.gif" width="500px" alt="search function usage" title="search example" />
+![search](https://user-images.githubusercontent.com/88841429/190107394-89dd422f-ca02-4566-ab80-a6d2a592e8ec.gif)
 
 - favorites
-<img src="favorites.gif" width="500px" alt="add favorites function usage" title="favorites example" />
+![favorites](https://user-images.githubusercontent.com/88841429/190107382-95a43c30-82a6-4551-a83f-dd41092179e7.gif)
 
 - favoriteList
-<img src="favoritelist.gif" width="500px" alt="favorite list function usage" title="favorite list example" />
+![favoritelist](https://user-images.githubusercontent.com/88841429/190107082-46bb2392-b128-48b1-8d6a-52adc990b4c6.gif)
 
 - infinite scroll
-<img src="scroll.gif" width="500px" alt="infinite scroll usage" title="scroll example" />
+![scroll](https://user-images.githubusercontent.com/88841429/190107392-00848505-be4c-482b-b29f-79d229ebf482.gif)   
+
+5. 추가 수정 사항
+- 드래그앤 드롭 애니메이션 (진행중)

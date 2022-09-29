@@ -9,7 +9,7 @@
   }
 
   100% {
-    transform: scale(3);
+    transform: scale(2.5);
   }
 }
 
@@ -37,5 +37,12 @@
     margin-top: 80px;
     font-size: 90px;
     animation: rotateImoji 1.4s ease-in infinite alternate;
+  }
+
+  a {
+    position: relative;
+    top: 100px;
+    font-size: 20px;
+    color: colors.$WHITE;
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
 import styles from './notFound.module.scss'
 
 export const NotFound = () => {
@@ -9,6 +9,7 @@ export const NotFound = () => {
         Not Found
       </h1>
       <p>🤔</p>
+      <Link to='/'>Go Home</Link>
     </div>
   )
 }

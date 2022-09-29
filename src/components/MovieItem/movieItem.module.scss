@@ -1,0 +1,116 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.movieBlock {
+  position: relative;
+  display: inline-block;
+  width: 310px;
+  height: 160px;
+  cursor: default;
+  border-radius: 20px;
+
+  & + & {
+    margin-top: 10px;
+  }
+
+  &.isOver {
+    background: rgba(colors.$DROP_BG_COLOR, 0.9);
+    border: 3px dashed colors.$POINT_SKYBLUE;
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      content: 'Drop Here';
+      transform: translate(-50%, -50%);
+    }
+
+    img,
+    ul,
+    svg {
+      display: none;
+    }
+
+    .movieWrapper {
+      background: none;
+    }
+  }
+
+  .movieWrapper {
+    display: flex;
+    height: 100%;
+    margin-top: 5px;
+    color: colors.$WHITE;
+    cursor: pointer;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+
+    & + & {
+      margin-top: 10px;
+    }
+
+    .posterWrapper {
+      position: relative;
+
+      img {
+        width: 120px;
+        min-width: 120px;
+        height: 160px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+      }
+
+      svg {
+        position: absolute;
+        color: colors.$BOOKMARK;
+        transform: translate(-120px, -6px);
+      }
+    }
+
+    .infoWrapper {
+      width: 180px;
+      padding: 10px 35px;
+      padding-left: 5px;
+      margin-left: 10px;
+      text-align: left;
+
+      .titleText {
+        display: block;
+        width: 153px;
+        max-height: 55px;
+        overflow: hidden;
+        font-size: 22px;
+        font-weight: 600;
+
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .dragBtn {
+    position: absolute;
+    right: 0;
+    width: 26px;
+    height: 160px;
+    color: colors.$WHITE;
+    background: linear-gradient(-90deg, rgba(colors.$APP_BACKGROUND, 1), rgba(colors.$POINT_SKYBLUE, 0.25));
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+.hideSth {
+  display: none;
+}

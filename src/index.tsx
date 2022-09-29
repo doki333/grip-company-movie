@@ -1,6 +1,5 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 
@@ -19,11 +18,9 @@ root.render(
   <StrictMode>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </RecoilRoot>
+        <Provider store={store}>
+          <App />
+        </Provider>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </BrowserRouter>

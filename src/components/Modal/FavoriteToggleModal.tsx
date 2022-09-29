@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import store from 'storejs'
 
 import { RootState } from 'store/store'
-import { setModalInfo, toggleModal } from 'store/reducers/movieReducer'
+import { setFavorite, setModalInfo, toggleModal } from 'store/reducers/movieReducer'
 
-import { IMovieItem } from 'types/search'
+import { IMovieArr, IMovieItem } from 'types/search'
 
 import { AiOutlineClose, AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import placeholderImg from '../../assets/no-image.jpg'
@@ -15,9 +15,10 @@ import styles from './modal.module.scss'
 
 export const FavoriteToggleModal = () => {
   const modalInfo = useSelector((state: RootState) => state.movie.willStarred)[0]
+  const favoriteList = useSelector((state: RootState) => state.movie.favoriteList)
 
   const getLocalStorageData = store.get('#M@VIeFavorITe') ?? [] // 로컬 스토리지에 저장되어 있는 데이터 가져오기
-  const isItemThere = getLocalStorageData.findIndex((item: IMovieItem) => item.imdbID === modalInfo.imdbID) !== -1
+  const isItemThere = favoriteList.findIndex((item: IMovieArr) => item.imdbID === modalInfo.imdbID) !== -1
 
   const [isStored, setIsStored] = useState(isItemThere)
   const dispatch = useDispatch()
@@ -33,8 +34,9 @@ export const FavoriteToggleModal = () => {
     const storedMovieIdx = getLocalStorageData.findIndex((item: IMovieItem) => item.imdbID === modalInfo.imdbID)
 
     if (!isItemThere) {
-      // localStorage에 데이터를 밀어넣을 때
+      // localStorage에 데이터를  밀어넣을 때
       store.set('#M@VIeFavorITe', [...getLocalStorageData, modalInfo])
+      dispatch(setFavorite([...getLocalStorageData, modalInfo]))
       setIsStored(true)
       return
     }
@@ -42,6 +44,7 @@ export const FavoriteToggleModal = () => {
     // 이미 있는 경우 지우기
     getLocalStorageData.splice(storedMovieIdx, 1)
     store.set('#M@VIeFavorITe', [...getLocalStorageData])
+    dispatch(setFavorite([...getLocalStorageData]))
     setIsStored(false)
   }
 

@@ -6,7 +6,7 @@ import { RootState } from 'store/store'
 import { search } from 'store/reducers/movieReducer'
 
 import { LayOut } from 'components/LayOut/LayOut'
-import CommonMovieList from 'components/MovieList/commonMovieList'
+import CommonMovieList from 'components/MovieList/CommonMovieList'
 import { Spinner } from 'components/Spinner/Spinner'
 import SearchInput from './SearchInput'
 
@@ -53,8 +53,8 @@ export const SearchFor = () => {
       {!data && <p>검색 결과가 없습니다.</p>}
       {data && (
         <div className={styles.listWrapper} ref={scrollRef}>
-          {data.pages.map((hello) => (
-            <CommonMovieList listThing={hello.movieList} key={`lists-${hello.currentPage}`} />
+          {data.pages.map((d) => (
+            <CommonMovieList listThing={d.movieList} key={`lists-${d.currentPage}`} />
           ))}
           {hasNextPage && <Spinner ref={ref} />}
           {!hasNextPage && <p>검색 결과가 없습니다.</p>}

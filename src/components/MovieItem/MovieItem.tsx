@@ -1,102 +1,104 @@
-import { useRecoil } from 'hooks/state'
-import { favoriteMovieList, isItemDraggable, modalVisibleState, infoOnModalState } from 'hooks/state/movie.atom'
-import { IMovieItem } from 'types/search'
-import styles from './moveItem.module.scss'
-import { cx } from 'styles'
+import { DragEvent } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import store from 'storejs'
+
+import { RootState } from 'store/store'
+import { setFavorite, setModalInfo, toggleModal } from 'store/reducers/movieReducer'
+
+import { IMovieItem } from 'types/movieItem'
+import { IMovieArr } from 'types/search'
+
 import { IoIosBookmark } from 'react-icons/io'
-import placeholderImg from 'assets/no-image.jpg'
 import { MdDragIndicator } from 'react-icons/md'
-import { initialState } from 'types/movieItem'
+import placeholderImg from 'assets/no-image.jpg'
 
-export const initialDnDstate: initialState = {
-  draggedFrom: 0,
-  draggedTo: 0,
-  isDragging: false,
-  updatedOrder: [],
-}
+import styles from './movieItem.module.scss'
 
-export const MovieItem = ({ title, year, type, poster, imdbID }: IMovieItem) => {
-  const [isDragPossible] = useRecoil(isItemDraggable)
-  const [, setShowModal] = useRecoil(modalVisibleState)
-  const [, setSelectedInfo] = useRecoil(infoOnModalState)
-  const [bookmark, setBookmark] = useRecoil(favoriteMovieList)
+let startIdx = 0
+let firstArr: [] | IMovieArr[] = []
 
-  const sliceTitle = title.length >= 25 ? `${title.slice(0, 25)}...` : title
+const MovieItem = ({ title, year, type, poster, imdbID }: IMovieItem) => {
+  const { pathname } = useLocation()
+  const isDraggable = pathname === '/favorites'
 
-  const getLocalStorageData = store.get('#M@VIeFavorITe') ?? []
-  const isBookmarked = getLocalStorageData.findIndex((content: IMovieItem) => content.imdbID === imdbID)
-  const updateIndex = bookmark.findIndex((content: IMovieItem) => content.imdbID === imdbID)
-  // 로컬스토리지 안에 있을때
+  const dispatch = useDispatch()
+  const storedList = useSelector((state: RootState) => state.movie.favoriteList)
+  const isItemStored = storedList.findIndex((item: IMovieArr) => item.imdbID === imdbID)
 
-  const handleClickList = () => {
-    setShowModal(true)
-    setSelectedInfo({ title, year, type, poster, imdbID })
+  const handleClickBtn = () => {
+    dispatch(toggleModal(true))
+    dispatch(setModalInfo([{ Title: title, Year: year, Type: type, Poster: poster, imdbID }]))
   }
 
-  const onDragStart = (e: React.DragEvent<HTMLLIElement>) => {
-    const initialPosition = Number(e.currentTarget.dataset.index)
-    initialDnDstate.draggedFrom = initialPosition
-    initialDnDstate.isDragging = true
-  }
+  const handleDragStart = (e: DragEvent<HTMLLIElement>) => {
+    e.dataTransfer.effectAllowed = 'move'
 
-  const onDragOver = (e: React.DragEvent<HTMLLIElement>) => {
-    e.preventDefault()
-
-    const lastPosition = Number(e.currentTarget.dataset.index)
-    initialDnDstate.draggedTo = lastPosition
-
-    let newList = [...bookmark]
-
-    const { draggedFrom } = initialDnDstate
-    const itemDragged = newList[draggedFrom]
-    const remainingItems = newList.filter((item, index) => index !== draggedFrom)
-
-    newList = [...remainingItems.slice(0, lastPosition), itemDragged, ...remainingItems.slice(lastPosition)]
-
-    if (lastPosition === initialDnDstate.draggedTo) {
-      initialDnDstate.updatedOrder = newList
-      initialDnDstate.draggedTo = lastPosition
+    if (e.currentTarget.dataset.index) {
+      const { index } = e.currentTarget.dataset
+      startIdx = Number(index)
     }
   }
 
-  const onDrop = () => {
-    if (initialDnDstate.draggedFrom === initialDnDstate.draggedTo) return
-    setBookmark(initialDnDstate.updatedOrder)
-    store.set('#M@VIeFavorITe', initialDnDstate.updatedOrder)
-    initialDnDstate.isDragging = false
+  const handleDrop = (e: DragEvent<HTMLLIElement>) => {
+    e.dataTransfer.dropEffect = 'move'
+    dispatch(setFavorite(firstArr))
+    store.set('#M@VIeFavorITe', firstArr)
+  }
+
+  const handleDragOver = (e: DragEvent<HTMLLIElement>) => {
+    e.preventDefault()
+  }
+
+  const handleDragEnter = (e: DragEvent<HTMLLIElement>) => {
+    const currentIdx = Number(e.currentTarget.dataset.index)
+
+    if (startIdx === currentIdx) {
+      firstArr = [...storedList]
+      return
+    }
+
+    let newList = [...storedList]
+    const newIdx = Number(e.currentTarget.dataset.index)
+
+    const draggingItem = storedList[startIdx]
+    const notDraggingItem = newList.filter((item, idx) => idx !== startIdx)
+
+    newList = [...notDraggingItem.slice(0, newIdx), draggingItem, ...notDraggingItem.slice(newIdx)]
+
+    firstArr = newList
   }
 
   return (
     <li
-      className={cx(styles.movieInfoInner, { [styles.dragList]: isDragPossible })}
-      role='menuitem'
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-      onClick={handleClickList}
-      data-index={updateIndex}
-      onDragStart={onDragStart}
-      draggable={isDragPossible ? 'true' : 'false'}
+      key={`list-${imdbID}`}
+      className={styles.movieBlock}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDrop={handleDrop}
+      draggable={isDraggable}
+      data-index={isItemStored}
     >
-      <div className={cx(styles.posterBlock, { [styles.bookmarked]: isBookmarked !== -1 })}>
-        <img
-          draggable='false'
-          src={poster === 'N/A' ? placeholderImg : poster}
-          alt='movie poster'
-          aria-label='movie poster'
-        />
-        {isBookmarked !== -1 && <IoIosBookmark size='55px' />}
-      </div>
-      <div className={styles.infoBlock}>
-        <p className={styles.titleText}>{sliceTitle}</p>
-        <p>Year: {year}</p>
-        <p className={styles.typeText}>Type: {type}</p>
-      </div>
-      {isDragPossible && (
-        <button type='button' className={styles.dragBtn}>
-          <MdDragIndicator size='26px' color='white' />
-        </button>
-      )}
+      <button type='button' onClick={handleClickBtn} className={styles.movieWrapper}>
+        <div className={styles.posterWrapper}>
+          <img
+            alt='movie poster'
+            aria-label='movie poster'
+            src={poster === 'N/A' ? placeholderImg : poster}
+            draggable={false}
+          />
+          {isItemStored !== -1 && <IoIosBookmark size='55px' />}
+        </div>
+        <ul className={styles.infoWrapper}>
+          <li className={styles.titleText}>{title}</li>
+          <li>Year: {year}</li>
+          <li className={styles.typeText}>{type}</li>
+        </ul>
+        {isDraggable && <MdDragIndicator size='12px' className={styles.dragBtn} color='white' />}
+      </button>
     </li>
   )
 }
+
+export default MovieItem

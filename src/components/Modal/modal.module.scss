@@ -25,6 +25,7 @@
   position: fixed;
   bottom: 50%;
   left: 50%;
+  z-index: 100;
   width: 360px;
   height: 720px;
   background: rgba(colors.$BLACK, 70%);
@@ -33,6 +34,7 @@
 
   .modalInner {
     @include flexbox.flexbox('center', 'center');
+    z-index: 10;
     flex-direction: column;
     width: 300px;
     min-height: 240px;
